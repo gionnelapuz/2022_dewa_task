@@ -7,7 +7,7 @@ import DownArrow from "@mui/icons-material/KeyboardArrowDown";
 import styles from "./chartTypeSelect.module.scss";
 
 function ChartTypeSelect(props) {
-  const { label, placeholder, options, handleChartTypeChange } = props;
+  const { label, placeholder, options, handleChartTypeChange, error } = props;
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDisplay, setSelectedDisplay] = useState(null);
@@ -62,9 +62,9 @@ function ChartTypeSelect(props) {
     <div ref={ref} className={`select-custom ${styles.wrapper}`}>
       <h1>{label}</h1>
 
-      <div className={styles.select__wrapper}>
+      <div className={`${styles.select__wrapper} `}>
         <button
-          className={`btn ${isOpen ? styles.active : ""}`}
+          className={`btn ${isOpen ? styles.active : ""} ${error ? styles.error__container : ''}`}
           onClick={toggleDropdown}
         >
           {!selectedDisplay ? placeholder : selectedDisplay.label} <DownArrow />

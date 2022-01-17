@@ -1,7 +1,7 @@
 const UserChart = require("../../models/chart/userChart");
 
 async function getAll() {
-  return await UserChart.query();
+  return await UserChart.query().select('id', 'title', 'keys', 'created_at').orderBy('created_at', 'desc');
 }
 
 async function store({ user_id, chart_id, title, keys, order }) {

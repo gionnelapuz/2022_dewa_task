@@ -6,18 +6,22 @@ import AreaChart from "../../../chartTypes/areaChart";
 import BarChart from "../../../chartTypes/barChart";
 import LineChart from "../../../chartTypes/lineChart";
 
-function ChartRender(props) {
+function ChartRender() {
   const [datasetItems, dataset, setDatasetItems, setDataset] = useDatasets();
-  const [chartType, setChartType, chartData, setChartData] = useGraphRender();
+  const [chartType, setChartType, chartData, setChartData, resetChartFields, threshold, setThreshold] = useGraphRender();
 
   const renderGraph = () => {
     switch (chartType) {
       case "lineChart":
-        return <LineChart data={chartData} />;
+        return <LineChart data={chartData}
+        threshold={threshold}
+         />;
       case "areaChart":
-        return <AreaChart data={chartData} />;
+        return <AreaChart data={chartData} 
+        threshold={threshold}/>;
         case "barChart":
-          return <BarChart data={chartData} />;
+          return <BarChart data={chartData} 
+          threshold={threshold}/>;
       default:
         break;
     }

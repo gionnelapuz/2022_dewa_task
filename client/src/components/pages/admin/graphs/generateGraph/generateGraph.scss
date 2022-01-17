@@ -18,8 +18,14 @@
     font-size: 20px;
     text-transform: uppercase;
     font-weight: $fontWeightBold;
+  }
+  label{
+    margin: 0;
+  }
 
-    margin-bottom: 4px!important;
+  input{
+    border-radius: 10px;
+    height: 44px;
   }
 
   .graphName{
@@ -31,14 +37,30 @@
     width: 100%;
     max-width: 300px;
 
-    label{
+    .form-group{
       margin: 0;
     }
+  }
 
-    input{
-      height: 44px;
+  .rowss{
+    display: flex;
+    .graphReference{
+      margin-left: 20px;
+
+      margin-top: 30px;
+      font-weight: $fontWeightBold;
+      text-transform: uppercase;
+      font-size: 20px;
+  
+      border-radius: 10px;
+  
+      width: 100%;
+      max-width: 300px;
+
     }
   }
+
+
 
 
   .chartType{

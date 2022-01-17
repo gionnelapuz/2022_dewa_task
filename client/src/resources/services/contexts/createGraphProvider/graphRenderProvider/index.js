@@ -10,8 +10,9 @@ function GraphRenderProvider({ children }) {
   const [chartType, setChartType] = useState(null);
   const [chartData, setChartData] = useState({
     keys: {},
-    items: [],
+    items: []
   });
+  const [threshold, setThreshold] = useState('');
 
   const resetChartFields = () => {
     setChartType(null)
@@ -19,11 +20,12 @@ function GraphRenderProvider({ children }) {
       keys: {},
       items: [],
     })
+    setThreshold('')
   }
   
   return (
     <GraphRenderContext.Provider
-      value={[chartType, setChartType, chartData, setChartData, resetChartFields]}
+      value={[chartType, setChartType, chartData, setChartData, resetChartFields, threshold, setThreshold]}
     >
       {children}
     </GraphRenderContext.Provider>

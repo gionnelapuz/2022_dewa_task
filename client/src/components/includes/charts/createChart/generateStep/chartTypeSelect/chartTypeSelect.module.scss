@@ -3,17 +3,27 @@
 .wrapper {
   margin-top: 30px;
 
+  width: 100%;
+  max-width: 300px;
+
+  .error {
+    &__container {
+      border: 1px solid $red!important;
+    }
+
+    &__message {
+      color: red;
+    }
+  }
+
   h1 {
     font-size: 20px;
     text-transform: uppercase;
     font-weight: $fontWeightBold;
-
-    margin-bottom: 4px!important;
   }
 
   .select__wrapper {
     width: 100%;
-    max-width: 300px;
     position: relative;
     button {
       width: 100%;
@@ -84,7 +94,8 @@
         //   border-radius: 0 0 10px 10px;
         // }
 
-        &:hover, &.active {
+        &:hover,
+        &.active {
           color: $darkGreen;
         }
       }

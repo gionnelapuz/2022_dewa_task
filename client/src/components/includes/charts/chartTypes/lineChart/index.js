@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 
 import {
   LineChart as LineChartComponent,
@@ -10,8 +10,10 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  ReferenceLine,
   Label,
 } from "recharts";
+import { generateRandomHexColor } from "../../../../../utils/charts/chartHelpers";
 
 export const variableOptions = [
   {
@@ -23,7 +25,7 @@ export const variableOptions = [
     key: "yAxis",
     label: "y-axis",
     required: true,
-  }
+  },
 ];
 
 export const customizeOptions = {
@@ -63,11 +65,11 @@ export const customizeOptions = {
       offset: -5,
       position: "insideLeft",
     },
-  }
+  },
 };
 
 function LineChart(props) {
-  const { data } = props;
+  const { data, threshold } = props;
   const { keys, items } = data;
 
   const options = customizeOptions;
@@ -76,8 +78,7 @@ function LineChart(props) {
   const optionsYAxis = options.yAxis;
 
   useEffect(() => {
-    if(data){
-
+    if (data) {
       formatChartItems();
     }
   }, [data]);
@@ -109,17 +110,20 @@ function LineChart(props) {
           name={dataKey}
           type="monotone"
           dataKey={dataKey}
-          // stroke={'red'}
+          stroke={generateRandomHexColor()}
         />
       );
     });
   };
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChartComponent data={chartData} margin={optionsMargin}>
         <CartesianGrid />
         {!optionsXAxis.enabled || (
-          <XAxis dataKey={optionsXAxis.dataKey}>
+          <XAxis
+            dataKey={optionsXAxis.dataKey}
+          >
             {!optionsXAxis.label.enabled || (
               <Label
                 value={optionsXAxis.label.title}
@@ -132,7 +136,17 @@ function LineChart(props) {
         )}
 
         {!optionsYAxis.enabled || (
-          <YAxis>
+          <YAxis style={{ fontSize: "12px" }} 
+          formatter={(value) => {
+            let formatted = value;
+            if (!isNaN(value)) {
+              formatted = value.toLocaleString("en-US");
+            }
+
+            return formatted;
+          }}
+            
+          >
             {!optionsYAxis.label.enabled || (
               <Label
                 value={optionsYAxis.label.title}
@@ -143,7 +157,26 @@ function LineChart(props) {
             )}
           </YAxis>
         )}
-        <Tooltip />
+        <Tooltip
+          formatter={(value) => {
+            let formatted = value;
+            if (!isNaN(value)) {
+              formatted = value.toLocaleString("en-US");
+            }
+
+            return formatted;
+          }}
+        />
+
+        {threshold.length > 0 ? <ReferenceLine
+          label={"threshold"}
+          y={parseInt(threshold)}
+          stroke={"#076b2e"}
+          alwaysShow
+          style={{ fontSize: '10px'}}
+        >
+          <Label value={parseInt(threshold)} position="left" style={{ fontSize: '12px' }} />
+        </ReferenceLine> : null}
 
         {renderLine()}
       </LineChartComponent>
@@ -151,4 +184,4 @@ function LineChart(props) {
   );
 }
 
-export default LineChart;
+export default memo(LineChart);

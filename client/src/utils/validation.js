@@ -1,8 +1,17 @@
 export const regex_url =
   /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
 
+export const regex_number = /^[0-9]*$/;
+
 export const isValidUrl = (data) => {
   if (regex_url.test(data)) {
+    return true;
+  }
+  return false;
+};
+
+export const isValidNumber = (data) => {
+  if (regex_number.test(data)) {
     return true;
   }
   return false;
@@ -31,7 +40,7 @@ export const isArrayOrObject = (data) => {
 };
 
 export const isObjectEmpty = (data) => {
-  if(Object.keys(data).length === 0){
+  if (Object.keys(data).length === 0) {
     return true;
   }
   return false;

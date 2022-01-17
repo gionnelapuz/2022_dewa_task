@@ -19,7 +19,9 @@ import moment from "moment";
 
 function DashboardChart(props) {
   const { data, handleDeleteChart } = props;
-  const { url, dataSetKey, chartTypeKey, chartKeys } = data.keys;
+  const { created_at } = data;
+  const { url, dataSetKey, chartTypeKey, chartKeys, chartThreshold } =
+    data.keys;
 
   const [chartType, setChartType] = useState(null);
   const [chartData, setChartData] = useState({
@@ -47,7 +49,8 @@ function DashboardChart(props) {
   };
 
   const triggerUpdatedOn = () => {
-    let time = moment().format();
+    let time = moment().format("MMM DD, YYYY, hh:mm a");
+    setUpdatedOn(time);
   };
 
   const deleteChart = () => {
@@ -75,11 +78,11 @@ function DashboardChart(props) {
   const renderGraph = () => {
     switch (chartType) {
       case "lineChart":
-        return <LineChart data={chartData} />;
+        return <LineChart data={chartData} threshold={chartThreshold || ""} />;
       case "areaChart":
-        return <AreaChart data={chartData} />;
+        return <AreaChart data={chartData} threshold={chartThreshold || ""} />;
       case "barChart":
-        return <BarChart data={chartData} />;
+        return <BarChart data={chartData} threshold={chartThreshold || ""} />;
       default:
         break;
     }
@@ -89,7 +92,9 @@ function DashboardChart(props) {
     <div className="dashboardChart">
       <div className="dashboardChart__wrapper">
         <div className="dashboardChart__header">
-          <h1>{data.title}</h1>
+          <div className="title__container">
+            <h1>{data.title}</h1>
+          </div>
           <div className="btn__container">
             <button
               className={`btn refresh ${isRefreshing ? "refreshing" : ""}`}

@@ -8,15 +8,16 @@ import ChartVariablesOptions from "../../../../includes/charts/createChart/gener
 import ChartRender from "../../../../includes/charts/createChart/generateStep/chartRender";
 import { useGraphRender } from "../../../../../resources/services/contexts/createGraphProvider/graphRenderProvider";
 
-import { isObjectEmpty } from "../../../../../utils/validation";
+import { isObjectEmpty, isValidNumber } from "../../../../../utils/validation";
 import ChartTypeSelect from "../../../../includes/charts/createChart/generateStep/chartTypeSelect";
 
-import "./generateGraph.scss";
 import { useDataSource } from "../../../../../resources/services/contexts/createGraphProvider/dataSourceProvider";
 import Input from "../../../../includes/input";
 
 import * as ApiChart from "../../../../../api/chart";
 import { useNavigate } from "react-router-dom";
+
+import "./generateGraph.scss";
 
 const chartOptions = [
   {
@@ -29,24 +30,21 @@ const chartOptions = [
     labelSmall: "Time series, correlations, proportions",
     value: "areaChart",
   },
-  {
-    label: "Bar Chart",
-    labelSmall: "Correlations",
-    value: "barChart",
-  },
 ];
 
 function GenerateGraph() {
   const [step, moveBackward, moveForward, renderStep, resetSteps] = useSteps();
-  const [source, setSource, renderSource, url, setUrl, resetDataSource] = useDataSource();
+  const [source, setSource, renderSource, url, setUrl, resetDataSource] =
+    useDataSource();
   const [datasetItems, dataset, setDatasetItems, setDataset, resetDataSet] =
     useDatasets();
 
-  const [chartType, setChartType, chartData, setChartData, resetChartFields] =
+  const [chartType, setChartType, chartData, setChartData, resetChartFields, threshold, setThreshold] =
     useGraphRender();
 
   const navigate = useNavigate();
 
+  const [errors, setErrors] = useState({});
   const [chartTitle, setChartTitle] = useState("");
 
   const goBack = () => {
@@ -56,31 +54,31 @@ function GenerateGraph() {
   };
 
   const resetAllFields = () => {
-    resetChartFields()
-    resetDataSet()
-    resetDataSource()
-    resetSteps()
-  }
+    resetChartFields();
+    resetDataSet();
+    resetDataSource();
+    resetSteps();
+  };
 
-  const handleTitleInputChange = (event) => setChartTitle(event.target.value);
 
   const handleChartTypeChange = (type) => setChartType(type);
+  const handleTitleInputChange = (event) => setChartTitle(event.target.value);
+  const handleChartThresholdChange = (event) => setThreshold(event.target.value);
 
   const storeChart = () => {
-
     const keys = {
       url,
       dataSetKey: dataset.title,
       chartTypeKey: chartType,
       chartKeys: chartData.keys,
-    }
+      chartThreshold: threshold
+    };
 
     ApiChart.storeChart({
       title: chartTitle,
-      keys
+      keys,
     })
       .then((res) => {
-
         resetAllFields();
 
         navigate("/");
@@ -90,25 +88,28 @@ function GenerateGraph() {
       });
   };
 
-  const renderCreateButton = () => {
-    if (
-      chartTitle === null ||
-      url === null ||
-      chartType === null ||
-      isObjectEmpty(chartData.keys)
-    ) {
-      return (
-        <button className="btn btn--green btn-sm" disabled>
-          Create
-        </button>
-      );
-    } else {
-      return (
-        <button className="btn btn--green btn-sm" onClick={() => storeChart()}>
-          Create
-        </button>
-      );
+  const validateForm = () => {
+    let errors = {};
+
+    if (chartTitle.length <= 0) {
+      errors.chartTitle = true;
     }
+
+    if (!chartType) {
+      errors.chartType = true;
+    }
+
+    if (threshold.length > 0 && !isValidNumber(threshold)) {
+      errors.chartThreshold = 'Only numbers allowed here with no dots or commas';
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return true;
+    }
+    
+    storeChart()
+    return false;
   };
 
   const render = () => (
@@ -121,26 +122,42 @@ function GenerateGraph() {
           <span>Step {step}:</span> {url ? "Generate Graph" : "Preview Graph"}
         </h1>
 
-        {renderCreateButton()}
+        {url !== null ?<button className="btn btn--green btn-sm" onClick={() => validateForm()}>
+          Create
+        </button> : null}
       </div>
 
       <div className="graphName">
         <Input
           className="form-group"
-          name="title"
+          name="chartTitle"
           value={chartTitle}
-          label="Graph Title"
+          label="Graph Title*"
           type="text"
           onChange={handleTitleInputChange}
+          error={errors.chartTitle}
         />
       </div>
 
-      <ChartTypeSelect
-        label={"Select Chart"}
-        placeholder={"Select"}
-        options={chartOptions}
-        handleChartTypeChange={handleChartTypeChange}
-      />
+      <div className="rowss">
+        <ChartTypeSelect
+          label={"Select Chart*"}
+          placeholder={"Select"}
+          options={chartOptions}
+          handleChartTypeChange={handleChartTypeChange}
+          error={errors.chartType}
+        />
+        <div className="graphReference">
+          <Input
+            name="chartThreshold"
+            label="Graph Threshold"
+            type="text"
+            value={threshold}
+            onChange={handleChartThresholdChange}
+            error={errors.chartThreshold}
+          />
+        </div>
+      </div>
 
       <ChartVariablesOptions />
 

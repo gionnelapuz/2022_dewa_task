@@ -33,6 +33,8 @@ p {
   }
 
   &--message {
+    font-size: 12px;
+    text-transform: none;
     color: red;
   }
 }
@@ -69,5 +71,12 @@ a, button {
         color: $darkGreen!important;
       }
     }
+  }
+}
+
+
+.recharts-reference-line{
+  .recharts-label{
+    fill: $darkGreen;
   }
 }
