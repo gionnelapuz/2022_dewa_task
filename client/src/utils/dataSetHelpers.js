@@ -3,9 +3,7 @@ export const getDataSetsFromObjectOrArray = (data) => {
     const parseData = JSON.parse(data);
 
     if (Array.isArray(parseData)) {
-      return [
-        { title: null, items: JSON.stringify(parseData, undefined, 2) },
-      ];
+      return getDatasetsFromArray(parseData);
     }
 
     if (Object.keys(parseData).length >= 0) {
@@ -16,17 +14,66 @@ export const getDataSetsFromObjectOrArray = (data) => {
   }
 };
 
+const getDatasetsFromArray = (array) => {
+  let dataSet = [];
+
+  for (let index = 0; index < array.length; index++) {
+    const object = array[index];
+
+    let formattedArrayObjects = {};
+    for (const key in object) {
+      if (typeof object[key] !== "object") {
+        formattedArrayObjects[key] = object[key];
+      }
+    }
+    dataSet.push(formattedArrayObjects);
+  }
+
+  return [
+    {
+      title: null,
+      items: JSON.stringify(dataSet, undefined, 2),
+    },
+  ];
+};
+
 const getDatasetsFromObject = (object) => {
   let dataSets = [];
   for (const key in object) {
-    if (Array.isArray(object[key])) {
+    const arrayFromObject = object[key];
+
+    if (Array.isArray(arrayFromObject)) {
+      let arrayToAttach = [];
+      for (let index = 0; index < arrayFromObject.length; index++) {
+        const object = arrayFromObject[index];
+
+        let formattedArrayObjects = {};
+        for (const key in object) {
+          if (typeof object[key] !== "object") {
+            formattedArrayObjects[key] = object[key];
+          }
+        }
+
+        arrayToAttach.push(formattedArrayObjects);
+      }
+
       dataSets.push({
         title: key,
-        items: JSON.stringify(object[key], undefined, 2),
+        items: JSON.stringify(arrayToAttach, undefined, 2),
       });
     }
   }
   return dataSets;
+};
+
+const formatObjectsFromArray = (object) => {
+  let obj = {};
+  for (const key in object) {
+    if (typeof object[key] !== "object") {
+      obj[key] = object[key];
+    }
+  }
+  return obj;
 };
 
 export const removeObjectsAndArrays = (items) => {
@@ -63,7 +110,6 @@ export const generateChartData = (dataSet, keys) => {
   let mappedChartItems = [];
 
   for (let index = 0; index < dataSet.length; index++) {
-
     const element = dataSet[index];
 
     let obj = {};
@@ -84,6 +130,6 @@ export const generateChartData = (dataSet, keys) => {
 
   return {
     keys,
-    items: mappedChartItems
-  }
+    items: mappedChartItems,
+  };
 };

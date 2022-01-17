@@ -1,19 +1,24 @@
 export const generateRandomHexColor = () => {
-  return "#" + Math.floor(Math.random() * 16777215).toString(16);
+  const colors = ['#003f5c', '#2f4b7c', '#665191', '#a05195', '#d45087']
+  return colors[Math.floor(Math.random() * colors.length)];
 };
 
-export const mapLineChartData = (
+export const mapChartData = (
   optionKey,
   dataKey,
   originalDataSet,
   chartData
 ) => {
   const previousDataKeys = { ...chartData.keys };
-  const previousDataItems = [...chartData.items];
+  let previousDataItems = [...chartData.items];
 
   if (optionKey in previousDataKeys) {
-    const dataKey = previousDataKeys[optionKey];
-    removeObjectItemByKey(previousDataItems, optionKey, dataKey);
+    const keyToRemove = previousDataKeys[optionKey];
+    previousDataItems = removeObjectItemByKey(
+      previousDataItems,
+      optionKey,
+      keyToRemove
+    );
   }
 
   const combinedOldAndNewData = combineOldAndNewData(
@@ -25,22 +30,20 @@ export const mapLineChartData = (
 
   const updatedOptionKeys = { ...previousDataKeys, [optionKey]: dataKey };
 
-  let obj = {
+  return {
     keys: updatedOptionKeys,
     items: combinedOldAndNewData,
   };
-
-  return obj;
 };
 
-const removeObjectItemByKey = (array, optionKey, dataKey) => {
+const removeObjectItemByKey = (array, optionKey, keyToRemove) => {
   for (let index = 0; index < array.length; index++) {
-    const element = array[index];
-
-    if (element[optionKey][dataKey]) {
-      delete element[optionKey][dataKey];
+    const objectItem = array[index];
+    if (objectItem[optionKey][keyToRemove]) {
+      delete objectItem[optionKey][keyToRemove]
     }
   }
+  return array;
 };
 
 const combineOldAndNewData = (
@@ -52,19 +55,16 @@ const combineOldAndNewData = (
   let mappedArray = [];
   for (let index = 0; index < originalDataArray.length; index++) {
     const element = originalDataArray[index];
-    if (element[dataKey]) {
-      const previousDataObject = existingArray[index];
-      mappedArray.push({
-        ...previousDataObject,
-        [optionKey]: {
-          [dataKey]: element[dataKey],
-        },
-      });
-    }
+    const previousDataObject = existingArray[index];
+    mappedArray.push({
+      ...previousDataObject,
+      [optionKey]: {
+        [dataKey]: element[dataKey],
+      },
+    });
   }
   return mappedArray;
 };
-
 
 export const removeObjectItemByKeyV2 = (array, optionKey, dataKey) => {
   const previousDataKeys = { ...array.keys };

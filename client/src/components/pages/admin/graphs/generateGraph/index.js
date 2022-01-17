@@ -39,8 +39,16 @@ function GenerateGraph() {
   const [datasetItems, dataset, setDatasetItems, setDataset, resetDataSet] =
     useDatasets();
 
-  const [chartType, setChartType, chartData, setChartData, resetChartFields, threshold, setThreshold] =
-    useGraphRender();
+  const [
+    chartType,
+    setChartType,
+    chartData,
+    setChartData,
+    resetChartFields,
+    threshold,
+    setThreshold,
+    resetChartData
+  ] = useGraphRender();
 
   const navigate = useNavigate();
 
@@ -60,10 +68,13 @@ function GenerateGraph() {
     resetSteps();
   };
 
-
-  const handleChartTypeChange = (type) => setChartType(type);
+  const handleChartTypeChange = (type) => {
+    resetChartData()
+    setChartType(type)
+  };
   const handleTitleInputChange = (event) => setChartTitle(event.target.value);
-  const handleChartThresholdChange = (event) => setThreshold(event.target.value);
+  const handleChartThresholdChange = (event) =>
+    setThreshold(event.target.value);
 
   const storeChart = () => {
     const keys = {
@@ -71,7 +82,7 @@ function GenerateGraph() {
       dataSetKey: dataset.title,
       chartTypeKey: chartType,
       chartKeys: chartData.keys,
-      chartThreshold: threshold
+      chartThreshold: threshold,
     };
 
     ApiChart.storeChart({
@@ -100,15 +111,16 @@ function GenerateGraph() {
     }
 
     if (threshold.length > 0 && !isValidNumber(threshold)) {
-      errors.chartThreshold = 'Only numbers allowed here with no dots or commas';
+      errors.chartThreshold =
+        "Only numbers allowed here with no dots or commas";
     }
 
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
       return true;
     }
-    
-    storeChart()
+
+    storeChart();
     return false;
   };
 
@@ -122,9 +134,13 @@ function GenerateGraph() {
           <span>Step {step}:</span> {url ? "Generate Graph" : "Preview Graph"}
         </h1>
 
-        {url !== null ?<button className="btn btn--green btn-sm" onClick={() => validateForm()}>
+        <button
+          className="btn btn--green btn-sm"
+          disabled={url === null}
+          onClick={() => validateForm()}
+        >
           Create
-        </button> : null}
+        </button>
       </div>
 
       <div className="graphName">

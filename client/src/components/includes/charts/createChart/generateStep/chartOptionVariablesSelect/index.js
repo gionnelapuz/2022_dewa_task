@@ -43,6 +43,15 @@ function ChartOptionVariablesSelect(props) {
     }
   }, [options]);
 
+
+
+  useEffect(() => {
+    if (Object.keys(selectedHeaders).length === 0) {
+      setSelectedDisplay(null);
+      setLastActiveData(null)
+    }
+  }, [selectedHeaders]);
+
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const handleDropdownSelect = (selectedData) => {

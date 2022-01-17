@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+
+import moment from "moment";
 
 import {
   AreaChart as AreaChartComponent,
@@ -26,19 +28,14 @@ export const variableOptions = [
     label: "Area 2",
     required: true,
   },
-  {
-    key: "area3",
-    label: "Area 3",
-    required: true,
-  },
 ];
 
 export const customizeOptions = {
   margin: {
-    top: 20,
-    right: 20,
-    bottom: 20,
-    left: 20,
+    top: 0,
+    right: 10,
+    bottom: 0,
+    left: 10,
   },
   cartesianGrid: {
     enabled: true,
@@ -81,7 +78,6 @@ function AreaChart(props) {
   const options = customizeOptions;
 
   const optionsMargin = options.margin;
-  const optionsCartesianGrid = options.cartesianGrid;
   const optionsXAxis = options.xAxis;
   const optionsYAxis = options.yAxis;
 
@@ -107,13 +103,21 @@ function AreaChart(props) {
     setChartData(formattedData);
   };
 
-  const renderArea = () => {
+  const renderArea = useMemo(() => {
     return Object.keys(keys).map((key, i) => {
       const dataKey = keys[key];
-      return <Area key={i} name={dataKey} stackId={2} type="monotone" dataKey={dataKey} 
-      fill={generateRandomHexColor()} />;
+      return (
+        <Area
+          key={i}
+          name={dataKey}
+          stackId={1}
+          type="monotone"
+          dataKey={dataKey}
+          fill={generateRandomHexColor()}
+        />
+      );
     });
-  };
+  }, [chartData]);
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -121,11 +125,17 @@ function AreaChart(props) {
         <CartesianGrid />
         {!optionsXAxis.enabled || (
           <XAxis
-            dataKey={optionsXAxis.dataKey}
-            formatter={(value) => {
+            dataKey={keys.xAxis}
+            style={{ fontSize: "12px" }}
+            tickFormatter={(value) => {
               let formatted = value;
+
               if (!isNaN(value)) {
                 formatted = value.toLocaleString("en-US");
+              }
+
+              if (moment(formatted).isValid()) {
+                formatted = moment(value).format("MMM DD, YY");
               }
 
               return formatted;
@@ -144,10 +154,17 @@ function AreaChart(props) {
 
         {!optionsYAxis.enabled || (
           <YAxis
-            formatter={(value) => {
+            dataKey={keys.yAxis}
+            style={{ fontSize: "12px" }}
+            tickFormatter={(value) => {
               let formatted = value;
+
               if (!isNaN(value)) {
                 formatted = value.toLocaleString("en-US");
+              }
+
+              if (moment(formatted).isValid()) {
+                formatted = moment(value).format("MMM DD, YY");
               }
 
               return formatted;
@@ -163,7 +180,21 @@ function AreaChart(props) {
             )}
           </YAxis>
         )}
-        <Tooltip />
+        <Tooltip
+          formatter={(value) => {
+            let formatted = value;
+
+            if (!isNaN(value)) {
+              formatted = value.toLocaleString("en-US");
+            }
+
+            if (moment(formatted).isValid()) {
+              formatted = moment(value).format("MMM DD, YY");
+            }
+
+            return formatted;
+          }}
+        />
 
         {threshold.length > 0 ? (
           <ReferenceLine
@@ -181,7 +212,7 @@ function AreaChart(props) {
           </ReferenceLine>
         ) : null}
 
-        {renderArea()}
+        {renderArea}
       </AreaChartComponent>
     </ResponsiveContainer>
   );

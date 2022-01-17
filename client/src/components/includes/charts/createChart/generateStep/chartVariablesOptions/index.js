@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDatasets } from "../../../../../../resources/services/contexts/createGraphProvider/datasetProvider";
 import { useGraphRender } from "../../../../../../resources/services/contexts/createGraphProvider/graphRenderProvider";
 import { chartVariablesOptions } from "../../../../../../utils/charts/chartConfigs";
-import { mapLineChartData, removeObjectByKey, removeObjectItemByKey, removeObjectItemByKeyV2 } from "../../../../../../utils/charts/chartHelpers";
+import {
+  mapChartData,
+  removeObjectItemByKeyV2,
+} from "../../../../../../utils/charts/chartHelpers";
 import ChartOptionVariablesSelect from "../chartOptionVariablesSelect";
 
 import styles from "./chartVariablesOptions.module.scss";
@@ -12,20 +15,19 @@ function ChartVariablesOptions() {
   const [chartType, setChartType, chartData, setChartData] = useGraphRender();
 
   const [selectedHeaders, setSelectedHeaders] = useState({});
+  const [chartOptions, setChartOptions] = useState([]);
+
 
   useEffect(() => {
     if (chartType) {
+      setSelectedHeaders({})
       setChartOptions(formatChartVariableOptions());
     }
   }, [chartType]);
 
 
-  // useEffect(() => {
-  //   console.log(chartData)
-  // }, [chartData]);
-
-  const [chartOptions, setChartOptions] = useState([]);
-
+  const handleSelectedHeaders = (data) => setSelectedHeaders(data);
+  
   const formatChartVariableOptions = () => {
     let chartOptions = chartVariablesOptions[chartType];
     const chartHeaders = dataset.headers;
@@ -38,7 +40,7 @@ function ChartVariablesOptions() {
   };
 
   const handleChartDataChange = ({ optionKey, dataKey }) => {
-    const mappedData = mapLineChartData(
+    const mappedData = mapChartData(
       optionKey,
       dataKey,
       dataset.items,
@@ -47,13 +49,9 @@ function ChartVariablesOptions() {
     setChartData(mappedData);
   };
   const handleChartDataRemove = ({ optionKey, dataKey }) => {
-    const remappedData = removeObjectItemByKeyV2(chartData, optionKey, dataKey)
-    
+    const remappedData = removeObjectItemByKeyV2(chartData, optionKey, dataKey);
     setChartData(remappedData);
-    
   };
-
-  const handleSelectedHeaders = (data) => setSelectedHeaders(data);
 
   const render = () => (
     <div className={styles.wrapper}>

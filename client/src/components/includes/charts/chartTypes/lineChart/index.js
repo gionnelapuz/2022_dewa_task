@@ -1,5 +1,7 @@
 import React, { memo, useEffect, useMemo, useState } from "react";
 
+import moment from "moment";
+
 import {
   LineChart as LineChartComponent,
   Line,
@@ -101,7 +103,7 @@ function LineChart(props) {
     setChartData(formattedData);
   };
 
-  const renderLine = () => {
+  const renderLine = useMemo(() => {
     return Object.keys(keys).map((key, i) => {
       const dataKey = keys[key];
       return (
@@ -114,7 +116,8 @@ function LineChart(props) {
         />
       );
     });
-  };
+  }, [chartData]);
+
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -122,13 +125,19 @@ function LineChart(props) {
         <CartesianGrid />
         {!optionsXAxis.enabled || (
           <XAxis
-            dataKey={optionsXAxis.dataKey}
-            formatter={(value) => {
+            dataKey={keys.xAxis}
+            style={{ fontSize: "12px" }}
+            tickFormatter={(value) => {
               let formatted = value;
+
               if (!isNaN(value)) {
                 formatted = value.toLocaleString("en-US");
               }
-  
+
+              if (moment(formatted).isValid()) {
+                formatted = moment(value).format("MMM DD, YY");
+              }
+
               return formatted;
             }}
           >
@@ -144,16 +153,22 @@ function LineChart(props) {
         )}
 
         {!optionsYAxis.enabled || (
-          <YAxis style={{ fontSize: "12px" }} 
-          formatter={(value) => {
-            let formatted = value;
-            if (!isNaN(value)) {
-              formatted = value.toLocaleString("en-US");
-            }
+          <YAxis
+            dataKey={keys.yAxis}
+            style={{ fontSize: "12px" }}
+            tickFormatter={(value) => {
+              let formatted = value;
 
-            return formatted;
-          }}
-            
+              if (!isNaN(value)) {
+                formatted = value.toLocaleString("en-US");
+              }
+
+              if (moment(formatted).isValid()) {
+                formatted = moment(value).format("MMM DD, YY");
+              }
+
+              return formatted;
+            }}
           >
             {!optionsYAxis.label.enabled || (
               <Label
@@ -168,25 +183,36 @@ function LineChart(props) {
         <Tooltip
           formatter={(value) => {
             let formatted = value;
+
             if (!isNaN(value)) {
               formatted = value.toLocaleString("en-US");
+            }
+
+            if (moment(formatted).isValid()) {
+              formatted = moment(value).format("MMM DD, YY");
             }
 
             return formatted;
           }}
         />
 
-        {threshold.length > 0 ? <ReferenceLine
-          label={"threshold"}
-          y={parseInt(threshold)}
-          stroke={"#076b2e"}
-          alwaysShow
-          style={{ fontSize: '10px'}}
-        >
-          <Label value={parseInt(threshold)} position="left" style={{ fontSize: '12px' }} />
-        </ReferenceLine> : null}
+        {threshold.length > 0 ? (
+          <ReferenceLine
+            label={"threshold"}
+            y={parseInt(threshold)}
+            stroke={"#076b2e"}
+            alwaysShow
+            style={{ fontSize: "10px" }}
+          >
+            <Label
+              value={parseInt(threshold)}
+              position="left"
+              style={{ fontSize: "12px" }}
+            />
+          </ReferenceLine>
+        ) : null}
 
-        {renderLine()}
+        {renderLine}
       </LineChartComponent>
     </ResponsiveContainer>
   );
