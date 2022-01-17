@@ -54,7 +54,7 @@ function DataSetTable(props) {
 
   const renderDynamicTableBodyRow = () => {
     const datasetItems = dataset.items;
-    return datasetItems.length <= 0 || datasetItems.map((item, i) => (
+    return datasetItems.map((item, i) => (
       <tr key={i}>{renderDynamicTableBodyRowElements(item)}</tr>
     ));
   };
@@ -63,15 +63,15 @@ function DataSetTable(props) {
     return Object.keys(item).map((key, i) => {
       let element = item[key];
 
+      console.log(element)
+
       // if (element === "") {
       //   delete item[key];
       // }
 
-      // if (isArrayOrObject(item[key])) {
+      // if (typeof element === "object") {
       //   delete item[key];
       // }
-
-      return  <td key={i}> {element}</td>
 
       // return i === 0 ? (
       //   <th key={i} scope="row">
