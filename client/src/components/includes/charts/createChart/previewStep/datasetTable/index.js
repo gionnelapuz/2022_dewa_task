@@ -10,11 +10,14 @@ function DataSetTable(props) {
 
   const [datasetItems, dataset, setDatasetItems, setDataset] = useDatasets();
 
+  const [render, setRender] = useState(false);
   const [tableHeaders, setTableHeaders] = useState([]);
 
   useEffect(() => {
     if (isValidArray(dataset.items)) {
       getDynamicHeaders();
+
+      setRender(true)
     }
   }, [dataset]);
 
@@ -101,7 +104,7 @@ function DataSetTable(props) {
 
   return (
     <div className={styles.wrapper}>
-      {tableHeaders.length <= 0 || renderTable()}
+      {!render || renderTable()}
     </div>
   );
 }
