@@ -63,23 +63,23 @@ function DataSetTable(props) {
     return Object.keys(item).map((key, i) => {
       let element = item[key];
 
+      if (element === "") {
+        delete item[key];
+      }
+
+      if (typeof element === "object") {
+        delete item[key];
+      }
+
       console.log(element)
 
-      // if (element === "") {
-      //   delete item[key];
-      // }
-
-      // if (typeof element === "object") {
-      //   delete item[key];
-      // }
-
-      return i === 0 ? (
-        <th key={i} scope="row">
-          {element}
-        </th>
-      ) : (
-        <td key={i}> {element}</td>
-      );
+      // return i === 0 ? (
+      //   <th key={i} scope="row">
+      //     {element}
+      //   </th>
+      // ) : (
+      //   <td key={i}> {element}</td>
+      // );
     });
   };
 
