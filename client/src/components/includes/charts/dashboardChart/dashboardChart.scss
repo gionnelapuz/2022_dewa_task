@@ -1,0 +1,44 @@
+@import "../../../../resources/styles/variables.scss";
+
+.dashboardChart {
+  width: 100%;
+  height: 500px;
+
+  &__wrapper {
+    padding: 0 10px 10px;
+    border: 1px solid lightgray;
+    box-shadow: $boxShadow;
+
+    min-height: 450px;
+
+    border-radius: 20px;
+
+    .dashboardChart__header {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+
+      h1 {
+        padding: 10px;
+        font-size: 20px;
+        margin: 5px 10px 10px;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      button {
+        background: transparent;
+      }
+      svg {
+        font-size: 28px;
+        color: $darkGreen;
+      }
+    }
+
+    .recharts-responsive-container {
+      width: 100%;
+      height: 400px !important;
+    }
+  }
+}

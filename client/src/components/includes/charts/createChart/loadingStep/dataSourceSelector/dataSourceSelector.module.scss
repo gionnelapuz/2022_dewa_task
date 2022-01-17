@@ -1,0 +1,21 @@
+@import "../../../../../../resources/styles/variables.scss";
+
+.wrapper {
+  margin: 10px 0 16px;
+  display: flex;
+
+  button {
+    &:first-child {
+      margin-right: 14px;
+    }
+    svg {
+      font-size: 20px;
+      margin-right: 8px;
+    }
+
+    &.active {
+      background-color: transparent;
+      color: $darkGreen !important;
+    }
+  }
+}

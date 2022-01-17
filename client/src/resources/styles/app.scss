@@ -1,0 +1,73 @@
+@import "variables";
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+
+  background-color: $lightGray;
+
+  font-family: $font, sans-serif;
+  font-weight: bold;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+.error {
+  &--container {
+    border: 1px solid $red;
+  }
+
+  &--message {
+    color: red;
+  }
+}
+
+input {
+  &::placeholder {
+    color: $darkGray !important;
+  }
+  &:focus {
+    box-shadow: none !important;
+  }
+
+  &.input {
+    &--no-border {
+      border: none !important;
+    }
+  }
+}
+
+a, button {
+  text-transform: uppercase;
+  font-weight: bold!important;
+  &:focus {
+    box-shadow: none !important;
+  }
+
+  &.btn {
+    &--green {
+      background-color: $darkGreen;
+      border: 2px solid $darkGreen;
+      color: $white!important;
+      &:hover {
+        background-color: transparent;
+        color: $darkGreen!important;
+      }
+    }
+  }
+}

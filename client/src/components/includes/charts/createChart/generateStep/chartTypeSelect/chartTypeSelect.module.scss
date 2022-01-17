@@ -1,0 +1,93 @@
+@import "../../../../../../resources/styles/variables.scss";
+
+.wrapper {
+  margin-top: 30px;
+
+  h1 {
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: $fontWeightBold;
+
+    margin-bottom: 4px!important;
+  }
+
+  .select__wrapper {
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+    button {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      height: 45px;
+      background-color: white;
+      border: 1px solid #ced4da;
+      margin-top: 6px;
+      text-align: left;
+
+      text-transform: none;
+      font-weight: $fontWeightRegular !important;
+
+      border-radius: 10px;
+
+      svg {
+        transition: 0.2s all ease-in-out;
+      }
+
+      &.active {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  .dropdown {
+    width: 100%;
+    top: 48px;
+    position: absolute;
+    padding: 0;
+    z-index: 100;
+
+    overflow-y: hidden;
+    overflow-x: scroll;
+
+    li {
+      padding: 0;
+      button {
+        display: block;
+        margin: 0;
+        padding: 10px 20px;
+
+        height: auto;
+
+        cursor: pointer;
+
+        border: none;
+
+        h1 {
+          font-size: 18px;
+          margin-bottom: -4px;
+
+          font-weight: $fontWeightMedium;
+          text-transform: none;
+        }
+
+        border-radius: 0;
+
+        // &:first-child {
+        //   border-radius: 10px 10px 0 0;
+        // }
+        // &:last-child {
+        //   border-radius: 0 0 10px 10px;
+        // }
+
+        &:hover, &.active {
+          color: $darkGreen;
+        }
+      }
+    }
+  }
+}

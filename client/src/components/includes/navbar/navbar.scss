@@ -1,0 +1,55 @@
+@import "../../../resources/styles/variables.scss";
+
+.navbar {
+  width: 250px;
+  min-width: 250px;
+  height: 100%;
+
+  padding: 20px;
+
+  background-color: $white;
+
+  justify-content: initial;
+  flex-wrap: nowrap;
+  flex-direction: column;
+
+  border-right: 2px solid $darkGreen;
+
+  &-brand {
+    width: 100%;
+    max-width: 70px;
+    margin: 0;
+  }
+
+  ul {
+    height: 100%;
+    margin-top: 20px;
+
+    li {
+      // &:last-child {
+      //   margin-top: auto;
+      // }
+
+      a {
+        display: flex;
+        align-items: center;
+        color: $darkGray;
+
+
+        &.active, &:focus, &:hover{
+          color: $darkGreen;
+        }
+
+        .navbar__text{
+          font-weight: $fontWeightMedium;
+          font-size: 14px;
+        }
+
+        svg {
+          font-size: 24px;
+          margin-right: 12px;
+        }
+      }
+    }
+  }
+}

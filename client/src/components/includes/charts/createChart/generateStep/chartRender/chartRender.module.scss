@@ -1,0 +1,11 @@
+@import "../../../../../../resources/styles/variables.scss";
+
+.wrapper {
+  height: 600px;
+  margin-top: 30px;
+  h1{
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: $fontWeightBold;
+  }
+}

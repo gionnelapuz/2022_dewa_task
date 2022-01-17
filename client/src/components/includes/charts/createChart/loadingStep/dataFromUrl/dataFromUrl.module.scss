@@ -1,0 +1,12 @@
+@import "../../../../../../resources/styles/variables.scss";
+
+.wrapper {
+  button {
+    display: flex;
+    margin: 10px auto 0;
+  }
+  .note {
+    font-size: 12px;
+    font-weight: $fontWeightMedium;
+  }
+}
