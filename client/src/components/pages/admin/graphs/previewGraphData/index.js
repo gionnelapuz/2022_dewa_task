@@ -54,7 +54,7 @@ function PreviewGraphData() {
 
       <DataSetList />
 
-      <DataSetTable handleTableHeaders={handleTableHeaders} />
+      {/* <DataSetTable handleTableHeaders={handleTableHeaders} /> */}
     </div>
   );
 }
