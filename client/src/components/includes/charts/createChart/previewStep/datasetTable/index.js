@@ -73,13 +73,13 @@ function DataSetTable(props) {
       //   delete item[key];
       // }
 
-      // return i === 0 ? (
-      //   <th key={i} scope="row">
-      //     {element}
-      //   </th>
-      // ) : (
-      //   <td key={i}> {element}</td>
-      // );
+      return i === 0 ? (
+        <th key={i} scope="row">
+          {element}
+        </th>
+      ) : (
+        <td key={i}> {element}</td>
+      );
     });
   };
 
