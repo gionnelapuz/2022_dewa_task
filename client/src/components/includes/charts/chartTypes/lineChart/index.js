@@ -123,6 +123,14 @@ function LineChart(props) {
         {!optionsXAxis.enabled || (
           <XAxis
             dataKey={optionsXAxis.dataKey}
+            formatter={(value) => {
+              let formatted = value;
+              if (!isNaN(value)) {
+                formatted = value.toLocaleString("en-US");
+              }
+  
+              return formatted;
+            }}
           >
             {!optionsXAxis.label.enabled || (
               <Label

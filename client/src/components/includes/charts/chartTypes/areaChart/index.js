@@ -11,7 +11,9 @@ import {
   Legend,
   ResponsiveContainer,
   Label,
+  ReferenceLine,
 } from "recharts";
+import { generateRandomHexColor } from "../../../../../utils/charts/chartHelpers";
 
 export const variableOptions = [
   {
@@ -73,7 +75,7 @@ export const customizeOptions = {
 };
 
 function AreaChart(props) {
-  const { data } = props;
+  const { data, threshold } = props;
   const { keys, items } = data;
 
   const options = customizeOptions;
@@ -108,7 +110,8 @@ function AreaChart(props) {
   const renderArea = () => {
     return Object.keys(keys).map((key, i) => {
       const dataKey = keys[key];
-      return <Area key={i} name={dataKey} type="monotone" dataKey={dataKey} />;
+      return <Area key={i} name={dataKey} type="monotone" dataKey={dataKey} 
+      fill={generateRandomHexColor()} />;
     });
   };
 
@@ -117,7 +120,17 @@ function AreaChart(props) {
       <AreaChartComponent data={chartData} margin={optionsMargin}>
         <CartesianGrid />
         {!optionsXAxis.enabled || (
-          <XAxis dataKey={optionsXAxis.dataKey}>
+          <XAxis
+            dataKey={optionsXAxis.dataKey}
+            formatter={(value) => {
+              let formatted = value;
+              if (!isNaN(value)) {
+                formatted = value.toLocaleString("en-US");
+              }
+
+              return formatted;
+            }}
+          >
             {!optionsXAxis.label.enabled || (
               <Label
                 value={optionsXAxis.label.title}
@@ -130,7 +143,16 @@ function AreaChart(props) {
         )}
 
         {!optionsYAxis.enabled || (
-          <YAxis>
+          <YAxis
+            formatter={(value) => {
+              let formatted = value;
+              if (!isNaN(value)) {
+                formatted = value.toLocaleString("en-US");
+              }
+
+              return formatted;
+            }}
+          >
             {!optionsYAxis.label.enabled || (
               <Label
                 value={optionsYAxis.label.title}
@@ -142,6 +164,23 @@ function AreaChart(props) {
           </YAxis>
         )}
         <Tooltip />
+
+        {threshold.length > 0 ? (
+          <ReferenceLine
+            label={"threshold"}
+            y={parseInt(threshold)}
+            stroke={"#076b2e"}
+            alwaysShow
+            style={{ fontSize: "10px" }}
+          >
+            <Label
+              value={parseInt(threshold)}
+              position="left"
+              style={{ fontSize: "12px" }}
+            />
+          </ReferenceLine>
+        ) : null}
+
         {renderArea()}
       </AreaChartComponent>
     </ResponsiveContainer>

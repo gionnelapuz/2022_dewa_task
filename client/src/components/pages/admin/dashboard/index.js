@@ -14,6 +14,8 @@ function Dashboard() {
 
   const [dashboardGraphs, setDashboardGraphs] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const resetContextValues = () => {
     setChartType(null);
     setChartData({
@@ -30,6 +32,7 @@ function Dashboard() {
     ApiCharts.getAll()
       .then((res) => {
         setDashboardGraphs(res.data);
+        setIsLoading(false)
       })
       .catch((error) => {});
   };
@@ -39,6 +42,15 @@ function Dashboard() {
     const filteredArray = orignalArray.filter((data) => data.id !== id);
     setDashboardGraphs(filteredArray);
   };
+
+  const renderCharts = () =>
+    dashboardGraphs.map((data, i) => (
+      <DashboardChart
+        key={i}
+        data={data}
+        handleDeleteChart={handleDeleteChart}
+      />
+    ));
 
   return (
     <div className="dashboard">
@@ -53,15 +65,17 @@ function Dashboard() {
         </Link>
       </div>
 
-      <div className="body">
-        {dashboardGraphs.map((data, i) => (
-          <DashboardChart
-            key={i}
-            data={data}
-            handleDeleteChart={handleDeleteChart}
-          />
-        ))}
-      </div>
+      {!isLoading ? (
+        <div className="body" style={{ height: "200px" }}>
+          {dashboardGraphs.length > 0 ? (
+            renderCharts()
+          ) : (
+            <div className="body__empty">
+              <span>Dashboard is Empty</span>
+            </div>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -32,6 +32,19 @@
 
   .body{
     margin-top: 20px;
+
+    &__empty{
+      height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span{
+      text-transform: uppercase;
+      font-weight: $fontWeightMedium;
+      font-size: 30px;
+      color: $darkGray;
+      }
+    }
   }
 
   
