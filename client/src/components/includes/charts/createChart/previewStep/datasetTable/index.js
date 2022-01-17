@@ -63,13 +63,13 @@ function DataSetTable(props) {
     return Object.keys(item).map((key, i) => {
       let element = item[key];
 
-      if (element === "") {
-        delete item[key];
-      }
+      // if (element === "") {
+      //   delete item[key];
+      // }
 
-      if (typeof element === "object") {
-        delete item[key];
-      }
+      // if (typeof element === "object") {
+      //   delete item[key];
+      // }
 
       return i === 0 ? (
         <th key={i} scope="row">
@@ -87,7 +87,7 @@ function DataSetTable(props) {
         <h1>Table Preview</h1>
         <table className="table table-bordered table-hover table-responsive">
           <thead>{renderDynamicTableHeaderElements()}</thead>
-          {/* <tbody>{renderDynamicTableBodyRow()}</tbody> */}
+          <tbody>{renderDynamicTableBodyRow()}</tbody>
         </table>
         <div className={styles.caption}>
           <span>
