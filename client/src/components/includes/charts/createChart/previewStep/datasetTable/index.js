@@ -64,11 +64,11 @@ function DataSetTable(props) {
       let element = item[key];
 
       if (element === "") {
-        delete item[key];
+        element = null;
       }
 
       if (typeof element === "object") {
-        delete item[key];
+        element = null;
       }
 
       return i === 0 ? (
