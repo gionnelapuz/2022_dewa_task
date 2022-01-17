@@ -134,13 +134,12 @@ function GenerateGraph() {
           <span>Step {step}:</span> {url ? "Generate Graph" : "Preview Graph"}
         </h1>
 
-        <button
+        {url ? <button
           className="btn btn--green btn-sm"
-          disabled={url === null}
           onClick={() => validateForm()}
         >
           Create
-        </button>
+        </button> : <div></div>}
       </div>
 
       <div className="graphName">
