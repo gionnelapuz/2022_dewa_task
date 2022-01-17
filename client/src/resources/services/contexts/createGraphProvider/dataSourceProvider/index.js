@@ -24,8 +24,13 @@ function DataSourceProvider({ children }) {
     }
   };
 
+  const resetDataSource = () => {
+    setSource("url");
+    setUrl(null)
+  }
+
   return (
-    <DataSourceContext.Provider value={[source, setSource, renderSource, url, setUrl]}>
+    <DataSourceContext.Provider value={[source, setSource, renderSource, url, setUrl, resetDataSource]}>
       {children}
     </DataSourceContext.Provider>
   );

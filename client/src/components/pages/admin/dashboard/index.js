@@ -5,7 +5,6 @@ import AddIcon from "@mui/icons-material/Add";
 import "./dashboard.scss";
 import { Link } from "react-router-dom";
 import DashboardChart from "../../../includes/charts/dashboardChart";
-import { useDatasets } from "../../../../resources/services/contexts/createGraphProvider/datasetProvider";
 import { useGraphRender } from "../../../../resources/services/contexts/createGraphProvider/graphRenderProvider";
 
 import * as ApiCharts from "../../../../api/chart";
@@ -24,16 +23,21 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    getDashboardData()
-  }, [])
+    getDashboardData();
+  }, []);
 
   const getDashboardData = () => {
     ApiCharts.getAll()
       .then((res) => {
-        console.log(res.data)
-        setDashboardGraphs(res.data)
+        setDashboardGraphs(res.data);
       })
       .catch((error) => {});
+  };
+
+  const handleDeleteChart = (id) => {
+    let orignalArray = [...dashboardGraphs];
+    const filteredArray = orignalArray.filter((data) => data.id !== id);
+    setDashboardGraphs(filteredArray);
   };
 
   return (
@@ -51,7 +55,11 @@ function Dashboard() {
 
       <div className="body">
         {dashboardGraphs.map((data, i) => (
-          <DashboardChart key={i} data={data} />
+          <DashboardChart
+            key={i}
+            data={data}
+            handleDeleteChart={handleDeleteChart}
+          />
         ))}
       </div>
     </div>

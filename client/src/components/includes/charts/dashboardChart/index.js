@@ -10,13 +10,15 @@ import AreaChart from "../chartTypes/areaChart";
 import BarChart from "../chartTypes/barChart";
 import LineChart from "../chartTypes/lineChart";
 
+import RefreshIcon from "@mui/icons-material/Refresh";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import "./dashboardChart.scss";
-import { ScatterChart } from "recharts";
+
+import moment from "moment";
 
 function DashboardChart(props) {
-  const { data } = props;
+  const { data, handleDeleteChart } = props;
   const { url, dataSetKey, chartTypeKey, chartKeys } = data.keys;
 
   const [chartType, setChartType] = useState(null);
@@ -24,6 +26,9 @@ function DashboardChart(props) {
     keys: {},
     items: [],
   });
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [updatedOn, setUpdatedOn] = useState(null);
 
   useEffect(() => {
     if (data) {
@@ -34,12 +39,19 @@ function DashboardChart(props) {
   const getExternalData = () => {
     ApiExternal.getData(url)
       .then((res) => {
+        triggerUpdatedOn();
+        setIsRefreshing(false);
         getDataSetFromResponse(res.data);
       })
       .catch((error) => {});
   };
 
+  const triggerUpdatedOn = () => {
+    let time = moment().format();
+  };
+
   const deleteChart = () => {
+    handleDeleteChart(data.id);
     ApiChart.deleteChart({
       id: data.id,
     })
@@ -47,8 +59,12 @@ function DashboardChart(props) {
       .catch((error) => {});
   };
 
+  const refreshChart = () => {
+    setIsRefreshing(true);
+    getExternalData();
+  };
+
   const getDataSetFromResponse = (responseDataSet) => {
-    console.log(chartTypeKey);
     setChartType(chartTypeKey);
     let dataSetFromResponse = retrieveDataSet(responseDataSet, dataSetKey);
 
@@ -74,14 +90,29 @@ function DashboardChart(props) {
       <div className="dashboardChart__wrapper">
         <div className="dashboardChart__header">
           <h1>{data.title}</h1>
-          {/* <button className="btn" onClick={() => deleteChart()}>
-            <DeleteIcon  />
-          </button> */}
+          <div className="btn__container">
+            <button
+              className={`btn refresh ${isRefreshing ? "refreshing" : ""}`}
+              disabled={isRefreshing}
+              onClick={() => refreshChart()}
+            >
+              <RefreshIcon />
+            </button>
+            <button className="btn" onClick={() => deleteChart()}>
+              <DeleteIcon />
+            </button>
+          </div>
         </div>
         {renderGraph()}
+        <div className="updatedOn">
+          <small className="updatedOn__text">
+            <span>Last Updated on:</span>{" "}
+            {!updatedOn ? moment().format("MMM DD, YYYY, hh:mm a") : updatedOn}
+          </small>
+        </div>{" "}
       </div>
     </div>
   );
 }
 
-export default memo(DashboardChart);
+export default DashboardChart;

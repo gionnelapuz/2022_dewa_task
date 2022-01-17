@@ -23,7 +23,7 @@ async function store(req, res) {
 
 async function deleteData(req, res) {
   try {
-    const { id } = req.query
+    const { id } = req.params
     const response = await UserChartRepository.deleteData(id);
     successResponse(res, response);
   } catch (err) {

@@ -28,10 +28,7 @@ function DataSetTable(props) {
 
       Object.keys(element).forEach((data, i) => {
         if (
-          !tableHeadersArray.includes(data) &&
-          typeof element[data] !== "object" &&
-          element[data] !== ""
-        ) {
+          !tableHeadersArray.includes(data) ) {
           tableHeadersArray.push(data);
         }
       });

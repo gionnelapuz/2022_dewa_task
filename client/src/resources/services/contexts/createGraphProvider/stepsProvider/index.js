@@ -20,6 +20,8 @@ function StepProvider({ children }) {
     return setStep((prev) => prev + 1);
   };
 
+  const resetSteps = () => setStep(1)
+
   const renderStep = () => {
     switch (step) {
       case 1:
@@ -35,7 +37,7 @@ function StepProvider({ children }) {
 
   return (
     <StepsContext.Provider
-      value={[step, moveBackward, moveForward, renderStep]}
+      value={[step, moveBackward, moveForward, renderStep, resetSteps]}
     >
       {children}
     </StepsContext.Provider>

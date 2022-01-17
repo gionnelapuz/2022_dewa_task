@@ -29,9 +29,9 @@ export const variableOptions = [
 export const customizeOptions = {
   margin: {
     top: 0,
-    right: 0,
+    right: 10,
     bottom: 0,
-    left: 20,
+    left: 10,
   },
   cartesianGrid: {
     enabled: true,

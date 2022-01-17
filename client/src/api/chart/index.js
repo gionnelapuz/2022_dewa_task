@@ -9,5 +9,5 @@ export const storeChart = async (params) => {
 };
 
 export const deleteChart = async (params) => {
-  return axios.post(`/api/charts/user`, params);
+  return axios.delete(`/api/charts/${params.id}`);
 };

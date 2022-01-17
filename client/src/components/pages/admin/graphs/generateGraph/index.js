@@ -37,8 +37,8 @@ const chartOptions = [
 ];
 
 function GenerateGraph() {
-  const [step, moveBackward, moveForward, renderStep] = useSteps();
-  const [source, setSource, renderSource, url, setUrl] = useDataSource();
+  const [step, moveBackward, moveForward, renderStep, resetSteps] = useSteps();
+  const [source, setSource, renderSource, url, setUrl, resetDataSource] = useDataSource();
   const [datasetItems, dataset, setDatasetItems, setDataset, resetDataSet] =
     useDatasets();
 
@@ -54,6 +54,13 @@ function GenerateGraph() {
     resetChartFields();
     moveBackward();
   };
+
+  const resetAllFields = () => {
+    resetChartFields()
+    resetDataSet()
+    resetDataSource()
+    resetSteps()
+  }
 
   const handleTitleInputChange = (event) => setChartTitle(event.target.value);
 
@@ -73,6 +80,9 @@ function GenerateGraph() {
       keys
     })
       .then((res) => {
+
+        resetAllFields();
+
         navigate("/");
       })
       .catch((error) => {
