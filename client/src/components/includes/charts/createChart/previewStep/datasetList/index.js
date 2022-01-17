@@ -22,7 +22,7 @@ function DataSetList() {
 
   return (
     <div className={styles.wrapper}>
-      <h1>Select Dataset</h1>
+      <h1>Select {datasetItems.length > 1 ? 'Datasets' : 'Dataset'}</h1>
       <div className={styles.items}>
         {datasetItems.map((item, i) => {
           const itemsLength = JSON.parse(item.items).length;
