@@ -110,7 +110,7 @@ function AreaChart(props) {
   const renderArea = () => {
     return Object.keys(keys).map((key, i) => {
       const dataKey = keys[key];
-      return <Area key={i} name={dataKey} type="monotone" dataKey={dataKey} 
+      return <Area key={i} name={dataKey} stackId={2} type="monotone" dataKey={dataKey} 
       fill={generateRandomHexColor()} />;
     });
   };
