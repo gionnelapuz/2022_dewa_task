@@ -10,8 +10,8 @@ export const isValidUrl = (data) => {
 
 export const isValidArray = (data) => {
   try {
-    const parseData = JSON.parse(data);
-    if (Array.isArray(parseData)) {
+    // const parseData = JSON.parse(data);
+    if (Array.isArray(data)) {
       return true;
     }
   } catch (error) {

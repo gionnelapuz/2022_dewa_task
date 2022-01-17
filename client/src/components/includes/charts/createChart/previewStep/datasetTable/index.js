@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useDatasets } from "../../../../../../resources/services/contexts/createGraphProvider/datasetProvider";
-import { isObjectEmpty } from "../../../../../../utils/validation";
+import { isObjectEmpty, isArrayOrObject, isValidArray } from "../../../../../../utils/validation";
 
 import styles from "./dataSetTable.module.scss";
 
@@ -13,7 +13,7 @@ function DataSetTable(props) {
   const [tableHeaders, setTableHeaders] = useState([]);
 
   useEffect(() => {
-    if (!isObjectEmpty(dataset)) {
+    if (isValidArray(dataset.items)) {
       getDynamicHeaders();
     }
   }, [dataset]);
