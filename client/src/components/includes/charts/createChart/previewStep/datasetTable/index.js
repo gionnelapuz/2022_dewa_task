@@ -10,14 +10,11 @@ function DataSetTable(props) {
 
   const [datasetItems, dataset, setDatasetItems, setDataset] = useDatasets();
 
-  const [render, setRender] = useState(false);
   const [tableHeaders, setTableHeaders] = useState([]);
 
   useEffect(() => {
     if (isValidArray(dataset.items)) {
       getDynamicHeaders();
-
-      setRender(true)
     }
   }, [dataset]);
 
@@ -88,7 +85,7 @@ function DataSetTable(props) {
     return (
       <div className={styles.wrapper__table}>
         <h1>Table Preview</h1>
-        <table className="table table-bordered table-hover table-responsive">
+        {/* <table className="table table-bordered table-hover table-responsive">
           <thead>{renderDynamicTableHeaderElements()}</thead>
           <tbody>{renderDynamicTableBodyRow()}</tbody>
         </table>
@@ -97,14 +94,14 @@ function DataSetTable(props) {
             {dataset.items.length} {dataset.items.length > 1 ? "rows" : "row"}
           </span>{" "}
           generated from <span>{dataset.title}</span> dataset
-        </div>
+        </div> */}
       </div>
     );
   };
 
   return (
     <div className={styles.wrapper}>
-      {!render || renderTable()}
+      {tableHeaders.length <= 0 || renderTable()}
     </div>
   );
 }
