@@ -5,7 +5,7 @@ import { useDatasets } from "../../../../../resources/services/contexts/createGr
 
 import ChartVariablesOptions from "../../../../includes/charts/createChart/generateStep/chartVariablesOptions";
 
-import ChartRender from "../../../../includes/charts/createChart/generateStep/chartRender";
+import ChartRender from "../../../../includes/charts/chartRender";
 import { useGraphRender } from "../../../../../resources/services/contexts/createGraphProvider/graphRenderProvider";
 
 import { isObjectEmpty, isValidNumber } from "../../../../../utils/validation";
@@ -136,6 +136,7 @@ function GenerateGraph() {
 
   const render = () => (
     <div className="generateGraph container">
+      
       <div className="header">
         <button className="btn btn--green btn-sm" onClick={goBack}>
           Back
@@ -152,7 +153,7 @@ function GenerateGraph() {
         </button> : <div></div>}
       </div>
 
-      <div className="graphName">
+      {url ? <div className="graphName">
         <Input
           className="form-group"
           name="chartTitle"
@@ -162,7 +163,7 @@ function GenerateGraph() {
           onChange={handleTitleInputChange}
           error={errors.chartTitle}
         />
-      </div>
+      </div> : null}
 
       <div className="rowss">
         <ChartTypeSelect
@@ -188,8 +189,11 @@ function GenerateGraph() {
 
       {!chartType || (
         <div className="chartRender">
-          <h1>Chart Preview</h1>
-          <ChartRender />
+          <h1>Preview Chart</h1>
+          <ChartRender
+            type={chartType}
+            data={chartData}
+          />
         </div>
       )}
     </div>

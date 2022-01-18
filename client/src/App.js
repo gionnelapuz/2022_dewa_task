@@ -10,6 +10,8 @@ import CreateGraph from "./components/pages/admin/graphs/createGraph";
 
 import CreateGraphProvider from "./resources/services/contexts/createGraphProvider";
 
+import ChartRender from "./components/includes/charts/chartRender";
+
 function App() {
   return (
     <BrowserRouter>
@@ -42,6 +44,8 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
+
+  // return <ChartRender type={"lineChart"} />;
 }
 
 export default App;

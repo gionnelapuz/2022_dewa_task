@@ -18,7 +18,7 @@ import {
 } from "recharts";
 import { generateRandomHexColor } from "../../../../../utils/charts/chartHelpers";
 
-export const variableOptions = [
+export const variables = [
   {
     key: "xAxis",
     label: "x-axis",
@@ -31,7 +31,7 @@ export const variableOptions = [
   }
 ];
 
-export const customizeOptions = {
+export const options = {
   margin: {
     top: 0,
     right: 10,
@@ -75,7 +75,6 @@ function ScatterChart(props) {
   const { data, threshold } = props;
   const { keys, items } = data;
 
-  const options = customizeOptions;
   const optionsMargin = options.margin;
   const optionsXAxis = options.xAxis;
   const optionsYAxis = options.yAxis;
@@ -204,7 +203,7 @@ function ScatterChart(props) {
           }}
         />
 
-        {threshold.length > 0 ? (
+        {/* {threshold.length > 0 ? (
           <ReferenceLine
             label={"threshold"}
             y={parseInt(threshold)}
@@ -218,7 +217,7 @@ function ScatterChart(props) {
               style={{ fontSize: "12px" }}
             />
           </ReferenceLine>
-        ) : null}
+        ) : null} */}
         {renderItems}
       </ScatterChartComponent>
     </ResponsiveContainer>

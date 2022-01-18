@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDatasets } from "../../../../../../resources/services/contexts/createGraphProvider/datasetProvider";
 import { useGraphRender } from "../../../../../../resources/services/contexts/createGraphProvider/graphRenderProvider";
-import { chartVariablesOptions } from "../../../../../../utils/charts/chartConfigs";
+import { chartVariables } from "../../../chartTypes/config";
 import {
   mapChartData,
   removeObjectItemByKeyV2,
@@ -29,7 +29,7 @@ function ChartVariablesOptions() {
   const handleSelectedHeaders = (data) => setSelectedHeaders(data);
   
   const formatChartVariableOptions = () => {
-    let chartOptions = chartVariablesOptions[chartType];
+    let chartOptions = chartVariables[chartType];
     const chartHeaders = dataset.headers;
     return chartOptions.map((data) => {
       return {

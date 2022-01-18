@@ -17,7 +17,7 @@ import {
 } from "recharts";
 import { generateRandomHexColor } from "../../../../../utils/charts/chartHelpers";
 
-export const variableOptions = [
+export const variables = [
   {
     key: "xAxis",
     label: "x-axis",
@@ -35,7 +35,7 @@ export const variableOptions = [
   },
 ];
 
-export const customizeOptions = {
+export const options = {
   margin: {
     top: 0,
     right: 10,
@@ -75,11 +75,10 @@ export const customizeOptions = {
   },
 };
 
-function LineChart(props) {
+const LineChart = (props) => {
   const { data, threshold } = props;
   const { keys, items } = data;
 
-  const options = customizeOptions;
   const optionsMargin = options.margin;
   const optionsXAxis = options.xAxis;
   const optionsYAxis = options.yAxis;
@@ -108,7 +107,25 @@ function LineChart(props) {
     setChartData(formattedData);
   };
 
-  const renderLine = useMemo(() => {
+  // const renderReferenceLine = useMemo(() => {
+  //   return threshold.length > 0 ? (
+  //     <ReferenceLine
+  //       label={"threshold"}
+  //       y={parseInt(threshold)}
+  //       stroke={"#076b2e"}
+  //       alwaysShow
+  //       style={{ fontSize: "10px" }}
+  //     >
+  //       <Label
+  //         value={parseInt(threshold)}
+  //         position="left"
+  //         style={{ fontSize: "12px" }}
+  //       />
+  //     </ReferenceLine>
+  //   ) : null
+  // }, [threshold])
+
+  const renderItems = useMemo(() => {
     return Object.keys(keys).map((key, i) => {
       const dataKey = keys[key];
       return (
@@ -167,10 +184,6 @@ function LineChart(props) {
                 formatted = value.toLocaleString("en-US");
               }
 
-              if (moment(formatted).isValid()) {
-                formatted = moment(value).format("MMM DD, YY");
-              }
-
               return formatted;
             }}
           >
@@ -220,23 +233,9 @@ function LineChart(props) {
           }}
         />
 
-        {threshold.length > 0 ? (
-          <ReferenceLine
-            label={"threshold"}
-            y={parseInt(threshold)}
-            stroke={"#076b2e"}
-            alwaysShow
-            style={{ fontSize: "10px" }}
-          >
-            <Label
-              value={parseInt(threshold)}
-              position="left"
-              style={{ fontSize: "12px" }}
-            />
-          </ReferenceLine>
-        ) : null}
+        {/* {renderReferenceLine} */}
 
-        {renderLine}
+        {renderItems}
       </LineChartComponent>
     </ResponsiveContainer>
   );

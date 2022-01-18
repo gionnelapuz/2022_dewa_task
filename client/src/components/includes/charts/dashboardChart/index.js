@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { lazy, memo, useEffect, useState } from "react";
 
 import * as ApiExternal from "../../../../api/external";
 import * as ApiChart from "../../../../api/chart";
@@ -6,25 +6,20 @@ import {
   generateChartData,
   retrieveDataSet,
 } from "../../../../utils/dataSetHelpers";
-import AreaChart from "../chartTypes/areaChart";
-import BarChart from "../chartTypes/barChart";
-import LineChart from "../chartTypes/lineChart";
-import ScatterChart from "../chartTypes/scatterChart";
 
 import RefreshIcon from "@mui/icons-material/Refresh";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import "./dashboardChart.scss";
-
 import moment from "moment";
+import ChartRender from "../chartRender";
+
+import "./dashboardChart.scss";
 
 function DashboardChart(props) {
   const { data, handleDeleteChart } = props;
-  const { created_at } = data;
   const { url, dataSetKey, chartTypeKey, chartKeys, chartThreshold } =
     data.keys;
 
-  const [chartType, setChartType] = useState(null);
   const [chartData, setChartData] = useState({
     keys: {},
     items: [],
@@ -69,28 +64,10 @@ function DashboardChart(props) {
   };
 
   const getDataSetFromResponse = (responseDataSet) => {
-    setChartType(chartTypeKey);
     let dataSetFromResponse = retrieveDataSet(responseDataSet, dataSetKey);
 
     let generatedChartData = generateChartData(dataSetFromResponse, chartKeys);
     setChartData(generatedChartData);
-  };
-
-  const renderGraph = () => {
-    switch (chartType) {
-      case "lineChart":
-        return <LineChart data={chartData} threshold={chartThreshold || ""} />;
-      case "areaChart":
-        return <AreaChart data={chartData} threshold={chartThreshold || ""} />;
-      case "barChart":
-        return <BarChart data={chartData} threshold={chartThreshold || ""} />;
-      case "scatterChart":
-        return (
-          <ScatterChart data={chartData} threshold={chartThreshold || ""} />
-        );
-      default:
-        break;
-    }
   };
 
   return (
@@ -113,7 +90,7 @@ function DashboardChart(props) {
             </button>
           </div>
         </div>
-        {renderGraph()}
+        <ChartRender type={chartTypeKey} data={chartData} />
         <div className="updatedOn">
           <small className="updatedOn__text">
             <span>Last Updated on:</span>{" "}
@@ -125,4 +102,4 @@ function DashboardChart(props) {
   );
 }
 
-export default DashboardChart;
+export default memo(DashboardChart);

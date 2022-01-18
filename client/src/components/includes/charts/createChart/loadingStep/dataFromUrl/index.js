@@ -91,7 +91,7 @@ function DataFromURL() {
         error={errors.sourceUrl}
       />
       <small className={styles.note}>
-        Note: Enter a URL that will return a array of data, if it is an API from
+        Note: Enter a URL that will contain an array of data, if it is an API from
         a server please ensure CORS is enabled to access the data.
       </small>
       <button

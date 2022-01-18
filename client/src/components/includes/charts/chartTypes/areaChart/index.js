@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 
 import moment from "moment";
 
@@ -17,7 +17,7 @@ import {
 } from "recharts";
 import { generateRandomHexColor } from "../../../../../utils/charts/chartHelpers";
 
-export const variableOptions = [
+export const variables = [
   {
     key: "area1",
     label: "Area 1",
@@ -30,7 +30,7 @@ export const variableOptions = [
   },
 ];
 
-export const customizeOptions = {
+export const options = {
   margin: {
     top: 0,
     right: 10,
@@ -74,8 +74,6 @@ export const customizeOptions = {
 function AreaChart(props) {
   const { data, threshold } = props;
   const { keys, items } = data;
-
-  const options = customizeOptions;
 
   const optionsMargin = options.margin;
   const optionsXAxis = options.xAxis;
@@ -196,7 +194,7 @@ function AreaChart(props) {
           }}
         />
 
-        {threshold.length > 0 ? (
+        {/* {threshold.length > 0 ? (
           <ReferenceLine
             label={"threshold"}
             y={parseInt(threshold)}
@@ -210,7 +208,7 @@ function AreaChart(props) {
               style={{ fontSize: "12px" }}
             />
           </ReferenceLine>
-        ) : null}
+        ) : null} */}
 
         {renderArea}
       </AreaChartComponent>
@@ -218,4 +216,4 @@ function AreaChart(props) {
   );
 }
 
-export default AreaChart;
+export default memo(AreaChart);
