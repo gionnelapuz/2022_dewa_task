@@ -1,33 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 
-import { ScatterChart as ScatterChartComponent, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import moment from "moment";
 
+import {
+  BarChart as BarChartComponent,
+  Bar,
+  Cell,
+  XAxis,
+  YAxis,
+  ZAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  ReferenceLine,
+  Label,
+} from "recharts";
+import { generateRandomHexColor } from "../../../../../utils/charts/chartHelpers";
 
 export const variableOptions = [
   {
-    key: "val1",
-    label: "Value 1",
+    key: "bar1",
+    label: "bar 1",
     required: true,
   },
   {
-    key: "val2",
-    label: "Val 2",
-    required: false,
+    key: "bar2",
+    label: "bar 2",
+    required: true,
   },
   {
-    key: "val3",
-    label: "Val 3",
-    required: false,
+    key: "bar3",
+    label: "bar 3",
+    required: true,
   },
 ];
 
-
 export const customizeOptions = {
   margin: {
-    top: 20,
-    right: 20,
-    bottom: 20,
-    left: 20,
+    top: 0,
+    right: 10,
+    bottom: 0,
+    left: 10,
   },
   cartesianGrid: {
     enabled: true,
@@ -60,22 +74,21 @@ export const customizeOptions = {
       position: "insideLeft",
     },
   },
-  values: {},
 };
 
-function BarChart(props) {
-  const { data } = props;
+function LineChart(props) {
+  const { data, threshold } = props;
   const { keys, items } = data;
 
   const options = customizeOptions;
-
   const optionsMargin = options.margin;
-  const optionsCartesianGrid = options.cartesianGrid;
   const optionsXAxis = options.xAxis;
   const optionsYAxis = options.yAxis;
 
   useEffect(() => {
-    formatChartItems();
+    if (data) {
+      formatChartItems();
+    }
   }, [data]);
 
   const [chartData, setChartData] = useState([]);
@@ -96,27 +109,137 @@ function BarChart(props) {
     setChartData(formattedData);
   };
 
+  const renderBar = useMemo(() => {
+    return Object.keys(keys).map((key, i) => {
+      const dataKey = keys[key];
+      return (
+        <Bar
+          key={i}
+          name={dataKey}
+          type="monotone"
+          dataKey={dataKey}
+          fill={generateRandomHexColor()}
+        />
+      );
+    });
+  }, [chartData]);
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <ScatterChartComponent data={chartData} margin={optionsMargin}>
+      <BarChartComponent data={chartData} margin={optionsMargin}>
         <CartesianGrid />
         {!optionsXAxis.enabled || (
-          <XAxis dataKey={optionsXAxis.dataKey}>
-           
+          <XAxis
+            dataKey={keys.xAxis}
+            style={{ fontSize: "12px" }}
+            tickFormatter={(value) => {
+              let formatted = value;
+
+              if (!isNaN(value)) {
+                formatted = value.toLocaleString("en-US");
+              }
+
+              if (moment(formatted).isValid()) {
+                formatted = moment(value).format("MMM DD, YY");
+              }
+
+              return formatted;
+            }}
+          >
+            {!optionsXAxis.label.enabled || (
+              <Label
+                value={optionsXAxis.label.title}
+                angle={optionsXAxis.label.angle}
+                offset={optionsXAxis.label.offset}
+                position={optionsXAxis.label.position}
+              />
+            )}
           </XAxis>
         )}
 
         {!optionsYAxis.enabled || (
-          <YAxis>
-           
+          <YAxis
+            dataKey={keys.yAxis}
+            style={{ fontSize: "12px" }}
+            tickFormatter={(value) => {
+              let formatted = value;
+
+              if (!isNaN(value)) {
+                formatted = value.toLocaleString("en-US");
+              }
+
+              if (moment(formatted).isValid()) {
+                formatted = moment(value).format("MMM DD, YY");
+              }
+
+              return formatted;
+            }}
+          >
+            {!optionsYAxis.label.enabled || (
+              <Label
+                value={optionsYAxis.label.title}
+                angle={optionsYAxis.label.angle}
+                offset={optionsYAxis.label.offset}
+                position={optionsYAxis.label.position}
+              />
+            )}
           </YAxis>
         )}
-        <Tooltip />
-        <Scatter name="A school" data={data} fill="#8884d8" />
-      </ScatterChartComponent>
+
+        <ZAxis
+          dataKey={keys.zAxis}
+          style={{ fontSize: "12px" }}
+          tickFormatter={(value) => {
+            let formatted = value;
+
+            if (!isNaN(value)) {
+              formatted = value.toLocaleString("en-US");
+            }
+
+            if (moment(formatted).isValid()) {
+              formatted = moment(value).format("MMM DD, YY");
+            }
+
+            return formatted;
+          }}
+        ></ZAxis>
+
+        <Tooltip
+          formatter={(value) => {
+            let formatted = value;
+
+            if (!isNaN(value)) {
+              formatted = value.toLocaleString("en-US");
+            }
+
+            if (moment(formatted).isValid()) {
+              formatted = moment(value).format("MMM DD, YY");
+            }
+
+            return formatted;
+          }}
+        />
+
+        {threshold.length > 0 ? (
+          <ReferenceLine
+            label={"threshold"}
+            y={parseInt(threshold)}
+            stroke={"#076b2e"}
+            alwaysShow
+            style={{ fontSize: "10px" }}
+          >
+            <Label
+              value={parseInt(threshold)}
+              position="left"
+              style={{ fontSize: "12px" }}
+            />
+          </ReferenceLine>
+        ) : null}
+
+        {renderBar}
+      </BarChartComponent>
     </ResponsiveContainer>
   );
 }
 
-export default BarChart;
+export default memo(LineChart);

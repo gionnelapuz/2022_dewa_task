@@ -9,6 +9,7 @@ import {
 import AreaChart from "../chartTypes/areaChart";
 import BarChart from "../chartTypes/barChart";
 import LineChart from "../chartTypes/lineChart";
+import ScatterChart from "../chartTypes/scatterChart";
 
 import RefreshIcon from "@mui/icons-material/Refresh";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -83,6 +84,10 @@ function DashboardChart(props) {
         return <AreaChart data={chartData} threshold={chartThreshold || ""} />;
       case "barChart":
         return <BarChart data={chartData} threshold={chartThreshold || ""} />;
+      case "scatterChart":
+        return (
+          <ScatterChart data={chartData} threshold={chartThreshold || ""} />
+        );
       default:
         break;
     }

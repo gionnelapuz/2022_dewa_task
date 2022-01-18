@@ -30,6 +30,16 @@ const chartOptions = [
     labelSmall: "Time series, correlations, proportions",
     value: "areaChart",
   },
+  {
+    label: "Bar Chart",
+    labelSmall: "correlations, proportions",
+    value: "barChart",
+  },
+  {
+    label: "Scatter Chart",
+    labelSmall: "observe and show relationships between two numeric variables",
+    value: "scatterChart",
+  },
 ];
 
 function GenerateGraph() {
@@ -147,7 +157,7 @@ function GenerateGraph() {
           className="form-group"
           name="chartTitle"
           value={chartTitle}
-          label="Graph Title*"
+          label="Graph Title"
           type="text"
           onChange={handleTitleInputChange}
           error={errors.chartTitle}
@@ -156,13 +166,13 @@ function GenerateGraph() {
 
       <div className="rowss">
         <ChartTypeSelect
-          label={"Select Chart*"}
+          label={"Select Chart"}
           placeholder={"Select"}
           options={chartOptions}
           handleChartTypeChange={handleChartTypeChange}
           error={errors.chartType}
         />
-        <div className="graphReference">
+        {/* <div className="graphReference">
           <Input
             name="chartThreshold"
             label="Graph Threshold"
@@ -171,7 +181,7 @@ function GenerateGraph() {
             onChange={handleChartThresholdChange}
             error={errors.chartThreshold}
           />
-        </div>
+        </div> */}
       </div>
 
       <ChartVariablesOptions />

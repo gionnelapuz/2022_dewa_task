@@ -3,8 +3,8 @@ import React, { memo, useEffect, useMemo, useState } from "react";
 import moment from "moment";
 
 import {
-  LineChart as LineChartComponent,
-  Line,
+  ScatterChart as ScatterChartComponent,
+  Scatter,
   XAxis,
   YAxis,
   ZAxis,
@@ -14,6 +14,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
   Label,
+  LabelList,
 } from "recharts";
 import { generateRandomHexColor } from "../../../../../utils/charts/chartHelpers";
 
@@ -27,12 +28,7 @@ export const variableOptions = [
     key: "yAxis",
     label: "y-axis",
     required: true,
-  },
-  {
-    key: "zAxis",
-    label: "z-axis",
-    required: true,
-  },
+  }
 ];
 
 export const customizeOptions = {
@@ -75,7 +71,7 @@ export const customizeOptions = {
   },
 };
 
-function LineChart(props) {
+function ScatterChart(props) {
   const { data, threshold } = props;
   const { keys, items } = data;
 
@@ -108,24 +104,13 @@ function LineChart(props) {
     setChartData(formattedData);
   };
 
-  const renderLine = useMemo(() => {
-    return Object.keys(keys).map((key, i) => {
-      const dataKey = keys[key];
-      return (
-        <Line
-          key={i}
-          name={dataKey}
-          type="monotone"
-          dataKey={dataKey}
-          stroke={generateRandomHexColor()}
-        />
-      );
-    });
+  const renderItems = useMemo(() => {
+    return <Scatter data={chartData} fill={generateRandomHexColor()} />;
   }, [chartData]);
 
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <LineChartComponent data={chartData} margin={optionsMargin}>
+      <ScatterChartComponent data={chartData} margin={optionsMargin}>
         <CartesianGrid />
         {!optionsXAxis.enabled || (
           <XAxis
@@ -201,8 +186,7 @@ function LineChart(props) {
 
             return formatted;
           }}
-        >
-        </ZAxis>
+        ></ZAxis>
 
         <Tooltip
           formatter={(value) => {
@@ -235,11 +219,10 @@ function LineChart(props) {
             />
           </ReferenceLine>
         ) : null}
-
-        {renderLine}
-      </LineChartComponent>
+        {renderItems}
+      </ScatterChartComponent>
     </ResponsiveContainer>
   );
 }
 
-export default memo(LineChart);
+export default memo(ScatterChart);
