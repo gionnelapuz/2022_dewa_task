@@ -57,7 +57,7 @@ function Dashboard() {
       <div className="header">
         <h1>Dashboard</h1>
         <Link
-          to={"/graph/create"}
+          to={"/chart/create"}
           className="btn btn--green"
           onClick={resetContextValues}
         >

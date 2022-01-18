@@ -32,7 +32,7 @@ function App() {
         />
 
         <Route
-          path="/graph/create"
+          path="/chart/create"
           element={
             <PrivateRoute>
               <CreateGraphProvider>
