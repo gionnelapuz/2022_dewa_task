@@ -3,7 +3,7 @@ import React from "react";
 import PasteIcon from "@mui/icons-material/ContentPaste";
 import UrlIcon from "@mui/icons-material/Link";
 
-import { useDataSource } from "../../../../../../resources/services/contexts/createGraphProvider/dataSourceProvider";
+import { useDataSource } from "../../../../../../resources/services/contexts/chartProvider/dataSourceProvider";
 
 import styles from "./dataSourceSelector.module.scss";
 

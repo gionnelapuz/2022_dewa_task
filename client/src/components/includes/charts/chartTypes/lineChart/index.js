@@ -216,10 +216,6 @@ const LineChart = (props) => {
               formatted = value.toLocaleString("en-US");
             }
 
-            if (moment(formatted).isValid()) {
-              formatted = moment(value).format("MMM DD, YY");
-            }
-
             return formatted;
           }}
         ></ZAxis>
@@ -233,7 +229,7 @@ const LineChart = (props) => {
             }
 
             if (moment(formatted).isValid()) {
-              formatted = moment(value).format("MMM DD, YY");
+              formatted = moment(value).format("MMM DD, YYYY");
             }
 
             return formatted;

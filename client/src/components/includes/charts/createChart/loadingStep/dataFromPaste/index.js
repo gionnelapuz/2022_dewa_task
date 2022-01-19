@@ -5,10 +5,10 @@ import { getDataSetsFromObjectOrArray } from "../../../../../../utils/dataSetHel
 
 import TextArea from "../../../../textarea";
 
-import { useDatasets } from "../../../../../../resources/services/contexts/createGraphProvider/datasetProvider";
+import { useDatasets } from "../../../../../../resources/services/contexts/chartProvider/datasetProvider";
 
 import styles from "./dataFromPaste.module.scss";
-import { useSteps } from "../../../../../../resources/services/contexts/createGraphProvider/stepsProvider";
+import { useSteps } from "../../../../../../resources/services/contexts/chartProvider/stepsProvider";
 
 function DataFromPaste() {
   const [step, moveBackward, moveForward] = useSteps();
@@ -65,7 +65,7 @@ function DataFromPaste() {
     <div className={styles.wrapper}>
       <TextArea
         name="paste"
-        placeholder={"Paste array data"}
+        placeholder={"Paste data"}
         onChange={handleInputChange}
         error={errors.paste}
       />

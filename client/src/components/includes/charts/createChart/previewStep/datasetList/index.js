@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { useDatasets } from "../../../../../../resources/services/contexts/createGraphProvider/datasetProvider";
+import { useDatasets } from "../../../../../../resources/services/contexts/chartProvider/datasetProvider";
 
 import styles from "./dataSetList.module.scss";
 

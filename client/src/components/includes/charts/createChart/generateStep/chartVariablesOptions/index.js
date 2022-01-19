@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useDatasets } from "../../../../../../resources/services/contexts/createGraphProvider/datasetProvider";
-import { useGraphRender } from "../../../../../../resources/services/contexts/createGraphProvider/graphRenderProvider";
+import { useDatasets } from "../../../../../../resources/services/contexts/chartProvider/datasetProvider";
+import { useChartRender } from "../../../../../../resources/services/contexts/chartProvider/chartRenderProvider";
 import { chartVariables } from "../../../chartTypes/config";
 import {
   mapChartData,
@@ -12,7 +12,7 @@ import styles from "./chartVariablesOptions.module.scss";
 
 function ChartVariablesOptions() {
   const [datasetItems, dataset, setDatasetItems, setDataset] = useDatasets();
-  const [chartType, setChartType, chartData, setChartData] = useGraphRender();
+  const [chartType, setChartType, chartData, setChartData] = useChartRender();
 
   const [selectedHeaders, setSelectedHeaders] = useState({});
   const [chartOptions, setChartOptions] = useState([]);

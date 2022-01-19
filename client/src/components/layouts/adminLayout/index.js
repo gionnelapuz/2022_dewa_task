@@ -6,7 +6,7 @@ import "./adminLayout.scss";
 
 function AdminLayout(props) {
   const { children } = props
-  return <div className="admin__layout">
+  return <div className="admin">
     <Navbar/>
     {children}
   </div>;

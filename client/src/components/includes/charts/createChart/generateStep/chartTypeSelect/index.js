@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDatasets } from "../../../../../../resources/services/contexts/createGraphProvider/datasetProvider";
-import { useGraphRender } from "../../../../../../resources/services/contexts/createGraphProvider/graphRenderProvider";
 
 import DownArrow from "@mui/icons-material/KeyboardArrowDown";
 

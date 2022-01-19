@@ -7,10 +7,10 @@ import * as ApiExternal from "../../../../../../api/external";
 import { isValidUrl } from "../../../../../../utils/validation";
 import { getDataSetsFromObjectOrArray } from "../../../../../../utils/dataSetHelpers";
 
-import { useDatasets } from "../../../../../../resources/services/contexts/createGraphProvider/datasetProvider";
+import { useDatasets } from "../../../../../../resources/services/contexts/chartProvider/datasetProvider";
 
-import { useSteps } from "../../../../../../resources/services/contexts/createGraphProvider/stepsProvider";
-import { useDataSource } from "../../../../../../resources/services/contexts/createGraphProvider/dataSourceProvider";
+import { useSteps } from "../../../../../../resources/services/contexts/chartProvider/stepsProvider";
+import { useDataSource } from "../../../../../../resources/services/contexts/chartProvider/dataSourceProvider";
 
 import styles from "./dataFromUrl.module.scss";
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { useDatasets } from "../../../../../../resources/services/contexts/createGraphProvider/datasetProvider";
+import { useDatasets } from "../../../../../../resources/services/contexts/chartProvider/datasetProvider";
 import { isObjectEmpty, isArrayOrObject, isValidArray } from "../../../../../../utils/validation";
 
 import styles from "./dataSetTable.module.scss";

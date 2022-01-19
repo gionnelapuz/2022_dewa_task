@@ -1,5 +1,9 @@
 @import "variables";
 
+@import 'animations';
+@import 'input';
+@import 'button';
+
 html,
 body {
   width: 100%;
@@ -11,6 +15,7 @@ body {
   font-family: $font, sans-serif;
   font-weight: bold;
 }
+
 
 #root {
   width: 100%;
@@ -36,47 +41,5 @@ p {
     font-size: 12px;
     text-transform: none;
     color: red;
-  }
-}
-
-input {
-  &::placeholder {
-    color: $darkGray !important;
-  }
-  &:focus {
-    box-shadow: none !important;
-  }
-
-  &.input {
-    &--no-border {
-      border: none !important;
-    }
-  }
-}
-
-a, button {
-  text-transform: uppercase;
-  font-weight: bold!important;
-  &:focus {
-    box-shadow: none !important;
-  }
-
-  &.btn {
-    &--green {
-      background-color: $darkGreen;
-      border: 2px solid $darkGreen;
-      color: $white!important;
-      &:hover {
-        background-color: transparent;
-        color: $darkGreen!important;
-      }
-    }
-  }
-}
-
-
-.recharts-reference-line{
-  .recharts-label{
-    fill: $darkGreen;
   }
 }

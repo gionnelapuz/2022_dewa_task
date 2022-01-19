@@ -28,7 +28,7 @@ export const variables = [
     key: "yAxis",
     label: "y-axis",
     required: true,
-  }
+  },
 ];
 
 export const options = {
@@ -151,10 +151,6 @@ function ScatterChart(props) {
                 formatted = value.toLocaleString("en-US");
               }
 
-              if (moment(formatted).isValid()) {
-                formatted = moment(value).format("MMM DD, YY");
-              }
-
               return formatted;
             }}
           >
@@ -179,10 +175,6 @@ function ScatterChart(props) {
               formatted = value.toLocaleString("en-US");
             }
 
-            if (moment(formatted).isValid()) {
-              formatted = moment(value).format("MMM DD, YY");
-            }
-
             return formatted;
           }}
         ></ZAxis>
@@ -196,7 +188,7 @@ function ScatterChart(props) {
             }
 
             if (moment(formatted).isValid()) {
-              formatted = moment(value).format("MMM DD, YY");
+              formatted = moment(value).format("MMM DD, YYYY");
             }
 
             return formatted;
