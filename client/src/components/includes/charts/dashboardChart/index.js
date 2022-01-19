@@ -1,4 +1,4 @@
-import React, { lazy, memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 
 import * as ApiExternal from "../../../../api/external";
 import * as ApiChart from "../../../../api/chart";
@@ -33,6 +33,10 @@ function DashboardChart(props) {
       getExternalData();
     }
   }, [data]);
+
+  useEffect(() => {
+    console.log(chartData)
+  }, [chartData])
 
   const getExternalData = () => {
     ApiExternal.getData(url)
