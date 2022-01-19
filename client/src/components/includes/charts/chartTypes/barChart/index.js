@@ -167,10 +167,6 @@ function LineChart(props) {
                 formatted = value.toLocaleString("en-US");
               }
 
-              if (moment(formatted).isValid()) {
-                formatted = moment(value).format("MMM DD, YY");
-              }
-
               return formatted;
             }}
           >

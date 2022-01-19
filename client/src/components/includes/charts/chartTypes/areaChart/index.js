@@ -111,7 +111,7 @@ function AreaChart(props) {
           stackId={1}
           type="monotone"
           dataKey={dataKey}
-          fill={generateRandomHexColor()}
+          stroke="url(#gradient)"
         />
       );
     });
@@ -121,6 +121,14 @@ function AreaChart(props) {
     <ResponsiveContainer width="100%" height="100%">
       <AreaChartComponent data={chartData} margin={optionsMargin}>
         <CartesianGrid />
+
+        <defs>
+          <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="red" />
+            <stop offset="100%" stopColor={generateRandomHexColor()} />
+          </linearGradient>
+        </defs>
+
         {!optionsXAxis.enabled || (
           <XAxis
             dataKey={keys.xAxis}
@@ -159,10 +167,6 @@ function AreaChart(props) {
 
               if (!isNaN(value)) {
                 formatted = value.toLocaleString("en-US");
-              }
-
-              if (moment(formatted).isValid()) {
-                formatted = moment(value).format("MMM DD, YY");
               }
 
               return formatted;

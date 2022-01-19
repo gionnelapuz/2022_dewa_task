@@ -134,7 +134,7 @@ const LineChart = (props) => {
           name={dataKey}
           type="monotone"
           dataKey={dataKey}
-          stroke={generateRandomHexColor()}
+          stroke="url(#gradient)"
         />
       );
     });
@@ -144,6 +144,14 @@ const LineChart = (props) => {
     <ResponsiveContainer width="100%" height="100%">
       <LineChartComponent data={chartData} margin={optionsMargin}>
         <CartesianGrid />
+
+        <defs>
+          <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="red" />
+            <stop offset="100%" stopColor={generateRandomHexColor()} />
+          </linearGradient>
+        </defs>
+
         {!optionsXAxis.enabled || (
           <XAxis
             dataKey={keys.xAxis}
@@ -214,8 +222,7 @@ const LineChart = (props) => {
 
             return formatted;
           }}
-        >
-        </ZAxis>
+        ></ZAxis>
 
         <Tooltip
           formatter={(value) => {
@@ -239,6 +246,6 @@ const LineChart = (props) => {
       </LineChartComponent>
     </ResponsiveContainer>
   );
-}
+};
 
 export default memo(LineChart);
