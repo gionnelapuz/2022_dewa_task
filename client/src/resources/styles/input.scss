@@ -1,0 +1,14 @@
+input {
+  &::placeholder {
+    color: $darkGray;
+  }
+  &:focus {
+    box-shadow: none;
+  }
+
+  &.input {
+    &--no-border {
+      border: none;
+    }
+  }
+}
