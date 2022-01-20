@@ -1,5 +1,6 @@
+const colors = ["#003f5c", "#2f4b7c", "#665191", "#a05195", "#d45087"];
+
 export const generateRandomHexColor = () => {
-  const colors = ['#003f5c', '#2f4b7c', '#665191', '#a05195', '#d45087']
   return colors[Math.floor(Math.random() * colors.length)];
 };
 
@@ -40,7 +41,7 @@ const removeObjectItemByKey = (array, optionKey, keyToRemove) => {
   for (let index = 0; index < array.length; index++) {
     const objectItem = array[index];
     if (objectItem[optionKey][keyToRemove]) {
-      delete objectItem[optionKey][keyToRemove]
+      delete objectItem[optionKey][keyToRemove];
     }
   }
   return array;

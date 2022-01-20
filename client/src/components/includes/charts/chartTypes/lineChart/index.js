@@ -135,6 +135,7 @@ const LineChart = (props) => {
           type="monotone"
           dataKey={dataKey}
           stroke="url(#gradient)"
+          dot={{ stroke: '#076b2e', strokeWidth: 1, r: 3}}
         />
       );
     });
