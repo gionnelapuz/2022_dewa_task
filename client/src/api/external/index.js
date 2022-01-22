@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export const get = async (params) => {
-  return axios.get(params);
+  return axios.post(`/api/external`, params);
 };

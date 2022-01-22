@@ -5,8 +5,9 @@ const helmet = require('helmet');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-const authRoute = require('./routes/auth/authRoute');
+const authRoutes = require('./routes/auth');
 const chartRoutes = require('./routes/charts');
+const externalRoutes = require('./routes/external');
 
 app.use(helmet());
 app.use(cookieParser());
@@ -24,8 +25,9 @@ app.get('/api/', (req, res) => {
   res.send('Backend is working!');
 });
 
-app.use('/api/auth', authRoute);
+app.use('/api/auth', authRoutes);
 app.use('/api/charts', chartRoutes);
+app.use('/api/external', externalRoutes);
 
 
 module.exports = app;

@@ -35,16 +35,6 @@ function DashboardChartItem(props) {
     getExternalData();
   }, []);
 
-  const getExternalData = () => {
-    ApiExternal.get(url).then((res) => {
-      if (isLoading) setIsLoading(false);
-
-      triggerUpdateTime();
-      setIsRefreshing(false);
-      getDataSetFromResponse(res.data);
-    });
-  };
-
   const triggerUpdateTime = () => {
     let formatterTime = moment().format("MMM DD, YYYY, hh:mm a");
     setUpdatedOn(formatterTime);
@@ -55,11 +45,19 @@ function DashboardChartItem(props) {
     getExternalData();
   };
 
-  const getDataSetFromResponse = (responseDataSet) => {
-    let dataSetFromResponse = retrieveDataSet(responseDataSet, dataSetKey);
+  const getExternalData = () => {
+    ApiExternal.get({
+      url,
+      dataSetKey,
+      chartKeys,
+    }).then((res) => {
+      if (isLoading) setIsLoading(false);
 
-    let generatedChartData = generateChartData(dataSetFromResponse, chartKeys);
-    setChartData(generatedChartData);
+      triggerUpdateTime();
+      setIsRefreshing(false);
+
+      setChartData(res.data);
+    });
   };
 
   const renderItem = () => (
