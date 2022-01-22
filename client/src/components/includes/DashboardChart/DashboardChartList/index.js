@@ -28,7 +28,7 @@ function DashboardChartList() {
     });
   };
 
-  const deleteDashboardChart = (id) => {
+  const deleteChart = (id) => {
     ApiUserChart.deleteChart({
       id,
     }).then(() => {
@@ -45,7 +45,7 @@ function DashboardChartList() {
             <DashboardChartItem
               key={i}
               data={dashboardGraph}
-              deleteDashboardChart={deleteDashboardChart}
+              deleteChart={deleteChart}
             />
           ))
         : renderEmpty()}

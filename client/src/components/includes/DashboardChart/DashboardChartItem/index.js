@@ -18,7 +18,7 @@ import Loading from "../../Loading";
 import "./dashboardChartItem.scss";
 
 function DashboardChartItem(props) {
-  const { data, deleteDashboardChart } = props;
+  const { data, deleteChart } = props;
   const { url, dataSetKey, chartTypeKey, chartKeys, chartThreshold } =
     data.keys;
 
@@ -74,7 +74,7 @@ function DashboardChartItem(props) {
           >
             <RefreshIcon />
           </button>
-          <button className="btn" onClick={() => deleteDashboardChart(data.id)}>
+          <button className="btn" onClick={() => deleteChart(data.id)}>
             <DeleteIcon />
           </button>
         </div>
