@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import Input from "../../../../../Input";
 
-import * as ApiExternal from "../../../../../../../api/external";
-
 import { isValidUrl } from "../../../../../../../utils/validation";
-import { getDataSetsFromObjectOrArray } from "../../../../../../../utils/charts/dataSetHelpers";
-
-import { useDatasets } from "../../../../../../../services/contexts/chartProvider/datasetProvider";
 
 import { useSteps } from "../../../../../../../services/contexts/chartProvider/stepsProvider";
 import { useDataSource } from "../../../../../../../services/contexts/chartProvider/dataSourceProvider";
+import { useDatasets } from "../../../../../../../services/contexts/chartProvider/datasetProvider";
+
+import * as ApiExternal from "../../../../../../../api/external";
 
 import styles from "./urlSource.module.scss";
 
@@ -55,18 +53,16 @@ function SourceFromURL() {
   const resetErrors = () => setErrors({});
 
   const getExternalData = () => {
-    ApiExternal.get(sourceUrl)
-      .then(async (res) => {
+    ApiExternal.get({
+      url: sourceUrl,
+    })
+      .then((res) => {
         setIsLoading(false);
 
-        const dataSets = await getDataSetsFromObjectOrArray(
-          JSON.stringify(res.data)
-        );
-
-        if (dataSets.length > 0) {
+        if (res.data.length > 0) {
           moveStep("Preview");
           setUrl(sourceUrl);
-          setDatasetItems(dataSets);
+          setDatasetItems(res.data);
         } else {
           setErrors({
             sourceUrl:

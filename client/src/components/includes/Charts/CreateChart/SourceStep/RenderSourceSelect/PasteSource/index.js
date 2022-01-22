@@ -3,17 +3,20 @@ import React, { useState } from "react";
 import { isArrayOrObject } from "../../../../../../../utils/validation";
 import { getDataSetsFromObjectOrArray } from "../../../../../../../utils/charts/dataSetHelpers";
 
+import { useDatasets } from "../../../../../../../services/contexts/chartProvider/datasetProvider";
+import { useSteps } from "../../../../../../../services/contexts/chartProvider/stepsProvider";
+
 import TextArea from "../../../../../Textarea";
 
-import { useDatasets } from "../../../../../../../services/contexts/chartProvider/datasetProvider";
+import * as ApiExternal from "../../../../../../../api/external";
 
-import { useSteps } from "../../../../../../../services/contexts/chartProvider/stepsProvider";
 import styles from "./pasteSource.module.scss";
 
 function PasteSource() {
   const { moveStep } = useSteps();
   const { setDatasetItems } = useDatasets();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
   const [paste, setPaste] = useState("");
@@ -40,22 +43,46 @@ function PasteSource() {
 
   const handleSubmit = async () => {
     if (handleValidate()) {
+      setIsLoading(true);
+
       resetErrors();
+      getExternalData();
 
-      const dataSets = await getDataSetsFromObjectOrArray(paste);
+      // const dataSets = await getDataSetsFromObjectOrArray(paste);
 
-      if (dataSets.length > 0) {
-        moveStep("Preview");
-        setDatasetItems(dataSets);
-      } else {
-        setErrors({
-          paste: "Could not parse input",
-        });
-      }
+      // if (dataSets.length > 0) {
+      //   moveStep("Preview");
+      //   setDatasetItems(dataSets);
+      // } else {
+      //   setErrors({
+      //     paste: "Could not parse input",
+      //   });
+      // }
     }
   };
 
   const resetErrors = () => setErrors({});
+
+  const getExternalData = () => {
+    ApiExternal.get({
+      items: paste,
+    })
+      .then((res) => {
+        setIsLoading(false);
+        if (res.data.length > 0) {
+          moveStep("Preview");
+          setDatasetItems(res.data);
+        } else {
+          setErrors({
+            paste: "Could not parse input",
+          });
+        }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        alert("Error occurred please refresh the page");
+      });
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -65,7 +92,11 @@ function PasteSource() {
         onChange={handleInputChange}
         error={errors.paste}
       />
-      <button className="btn btn-sm btn--green" onClick={handleSubmit}>
+      <button
+        className="btn btn-sm btn--green"
+        onClick={handleSubmit}
+        disabled={isLoading}
+      >
         Format Data
       </button>
     </div>

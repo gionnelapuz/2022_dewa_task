@@ -1,10 +1,10 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
+
+import { Link } from "react-router-dom";
 
 import RenderSourceSelect from "../../../../includes/Charts/CreateChart/SourceStep/RenderSourceSelect";
 
 import { useDataSource } from "../../../../../services/contexts/chartProvider/dataSourceProvider";
-
-import { Link } from "react-router-dom";
 
 import "./sourceStep.scss";
 

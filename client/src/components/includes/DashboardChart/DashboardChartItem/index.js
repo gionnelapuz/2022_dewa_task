@@ -2,11 +2,6 @@ import React, { memo, useEffect, useState } from "react";
 
 import * as ApiExternal from "../../../../api/external";
 
-import {
-  generateChartData,
-  retrieveDataSet,
-} from "../../../../utils/charts/dataSetHelpers";
-
 import RefreshIcon from "@mui/icons-material/Refresh";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -19,7 +14,7 @@ import "./dashboardChartItem.scss";
 
 function DashboardChartItem(props) {
   const { data, deleteChart } = props;
-  const { url, dataSetKey, chartTypeKey, chartKeys, chartThreshold } =
+  const { url, dataSetKey, chartTypeKey, chartKeys } =
     data.keys;
 
   const [chartData, setChartData] = useState({
@@ -32,7 +27,7 @@ function DashboardChartItem(props) {
   const [updatedOn, setUpdatedOn] = useState(null);
 
   useEffect(() => {
-    getExternalData();
+    getDashboardChartItemData();
   }, []);
 
   const triggerUpdateTime = () => {
@@ -42,11 +37,11 @@ function DashboardChartItem(props) {
 
   const refreshChart = () => {
     setIsRefreshing(true);
-    getExternalData();
+    getDashboardChartItemData();
   };
 
-  const getExternalData = () => {
-    ApiExternal.get({
+  const getDashboardChartItemData = () => {
+    ApiExternal.dashboard({
       url,
       dataSetKey,
       chartKeys,
