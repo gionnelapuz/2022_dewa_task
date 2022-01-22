@@ -6,7 +6,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const authRoute = require('./routes/auth/authRoute');
-const chartRoutes = require('./routes/chart/chartRoutes');
+const chartRoutes = require('./routes/charts');
 
 app.use(helmet());
 app.use(cookieParser());

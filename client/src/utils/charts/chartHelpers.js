@@ -37,16 +37,6 @@ export const mapChartData = (
   };
 };
 
-const removeObjectItemByKey = (array, optionKey, keyToRemove) => {
-  for (let index = 0; index < array.length; index++) {
-    const objectItem = array[index];
-    if (objectItem[optionKey][keyToRemove]) {
-      delete objectItem[optionKey][keyToRemove];
-    }
-  }
-  return array;
-};
-
 const combineOldAndNewData = (
   existingArray,
   originalDataArray,
@@ -67,7 +57,17 @@ const combineOldAndNewData = (
   return mappedArray;
 };
 
-export const removeObjectItemByKeyV2 = (array, optionKey, dataKey) => {
+const removeObjectItemByKey = (array, optionKey, keyToRemove) => {
+  for (let index = 0; index < array.length; index++) {
+    const objectItem = array[index];
+    if (objectItem[optionKey][keyToRemove]) {
+      delete objectItem[optionKey][keyToRemove];
+    }
+  }
+  return array;
+};
+
+export const removeObjectItemByKeyV1 = (array, optionKey) => {
   const previousDataKeys = { ...array.keys };
   const previousDataItems = [...array.items];
 

@@ -1,0 +1,25 @@
+@import "../../../../../../../resources/styles/variables.scss";
+
+.wrapper {
+  margin-top: 30px;
+
+  h1 {
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: $fontWeightBold;
+  }
+  label {
+    margin: 0;
+  }
+
+  .options {
+    padding: 0;
+    .options__item {
+      display: inline-block;
+      width: 100%;
+      max-width: 300px;
+
+      margin: 10px;
+    }
+  }
+}

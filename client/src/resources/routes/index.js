@@ -1,10 +1,10 @@
-import AdminLayout from "../../components/layouts/adminLayout";
+import AdminLayout from "../../components/layouts/AdminLayout";
 
-import CreateChart from "../../components/pages/admin/charts/createChart";
-import Dashboard from "../../components/pages/admin/dashboard";
-import Login from "../../components/pages/login";
+import CreateChart from "../../components/pages/Admin/Charts/CreateChart";
+import Dashboard from "../../components/pages/Admin/Dashboard";
+import Login from "../../components/pages/Login";
 
-import ChartProvider from "../../resources/services/contexts/chartProvider";
+import ChartProvider from "../../services/contexts/chartProvider";
 
 export const routes = {
   login: {

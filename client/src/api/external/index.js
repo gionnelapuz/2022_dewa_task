@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-export const getData = async (params) => {
+export const get = async (params) => {
   return axios.get(params);
 };

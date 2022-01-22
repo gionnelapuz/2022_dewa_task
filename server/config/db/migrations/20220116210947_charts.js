@@ -3,6 +3,7 @@ exports.up = function(knex) {
         table.increments()
         table.string('name')
         table.text('description')
+        table.string('key')
         table.timestamps(false, true);
     }) 
 };

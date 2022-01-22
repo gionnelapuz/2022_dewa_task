@@ -1,0 +1,13 @@
+@import "../../../../../../../resources/styles/app.scss";
+
+.wrapper {
+  textarea {
+    min-height: 300px;
+    font-size: 14px;
+  }
+
+  button {
+    display: flex;
+    margin: 10px auto;
+  }
+}

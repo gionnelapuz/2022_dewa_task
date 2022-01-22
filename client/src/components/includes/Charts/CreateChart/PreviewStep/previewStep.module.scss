@@ -1,0 +1,15 @@
+@import "../../../../../resources/styles/variables.scss";
+
+.wrapper {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h1 {
+      font-weight: $fontWeightBold;
+      text-transform: uppercase;
+      font-size: 26px;
+      text-align: center;
+    }
+  }
+}
